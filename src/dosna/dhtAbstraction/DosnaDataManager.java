@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import java.util.NoSuchElementException;
 import kademlia.dht.GetParameter;
 import kademlia.KademliaNode;
+import kademlia.dht.KadContent;
 import kademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.NodeId;
@@ -96,26 +97,32 @@ public final class DosnaDataManager implements DataManager
         {
             this.putLocally(content);
         }
-
+        
         return num;
     }
-
+    
     @Override
     public StorageEntry get(final GetParameter gp) throws IOException, ContentNotFoundException
     {
         return kad.get(gp);
     }
-
+    
     @Override
     public StorageEntry get(NodeId key, String type) throws IOException, NoSuchElementException, ContentNotFoundException
     {
         return this.get(new GetParameter(key, type));
     }
-
+    
     @Override
     public StorageEntry get(NodeId key, String type, String ownerId) throws IOException, NoSuchElementException, ContentNotFoundException
     {
         return this.get(new GetParameter(key, type, ownerId));
+    }
+    
+    @Override
+    public void cache(KadContent content) throws IOException
+    {
+        this.kad.cache(content);
     }
 
     /**
@@ -125,15 +132,15 @@ public final class DosnaDataManager implements DataManager
     @Override
     public void updateStorage()
     {
-
+        
     }
-
+    
     @Override
     public void shutdown(final boolean saveState) throws IOException
     {
         this.kad.shutdown(saveState);
     }
-
+    
     @Override
     public KademliaNode getKademliaNode()
     {

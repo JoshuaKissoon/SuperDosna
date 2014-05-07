@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import kademlia.KademliaNode;
 import kademlia.dht.GetParameter;
+import kademlia.dht.KadContent;
 import kademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.NodeId;
@@ -105,6 +106,20 @@ public interface DataManager
      * @throws java.io.IOException
      */
     public void shutdown(final boolean saveState) throws IOException;
-    
+
+    /**
+     * @return The KademliaNode used by this DataManager
+     */
     public KademliaNode getKademliaNode();
+
+    /**
+     * Stores the specified value under the given key locally;
+     * This content is permanently stored locally and will not be deleted unless the cache is cleared.
+     *
+     * @param content The content to put onto the local DHT
+     *
+     * @throws java.io.IOException
+     *
+     */
+    public void cache(KadContent content) throws IOException;
 }
