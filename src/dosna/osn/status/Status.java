@@ -19,7 +19,6 @@ public class Status extends DOSNAContent
 
     private String text;
     private String userId;
-    private transient Actor actor;
 
     private NodeId key;
 
@@ -40,9 +39,11 @@ public class Status extends DOSNAContent
     private Status(final Actor actor, final String text)
     {
         this.text = text;
-        this.actor = actor;
         this.userId = actor.getId();
         this.generateKey();
+
+        /* Add the owner as an actor related to this content */
+        addActor(actor, "owner");
     }
 
     /**
@@ -103,4 +104,23 @@ public class Status extends DOSNAContent
         return this.userId;
     }
 
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder(super.toString());
+
+        sb.append("[");
+
+        sb.append("owner: ");
+        sb.append(this.userId);
+        sb.append("; ");
+
+        sb.append("text: ");
+        sb.append(this.text);
+        sb.append("; ");
+
+        sb.append("]");
+
+        return sb.toString();
+    }
 }

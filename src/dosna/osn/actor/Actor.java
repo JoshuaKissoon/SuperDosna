@@ -22,10 +22,10 @@ public class Actor extends DOSNAContent
     final static String SERIALK_CONTENT_MANAGER = "CManager";
 
     /* Manage the content posted by this actor */
-    protected ContentManager contentManager;
+    protected ActorContentManager contentManager;
 
     /* Manage relationships this actor have to other actors */
-    protected ConnectionsManager connectionManager;
+    protected ActorConnectionsManager connectionManager;
 
     /* Attributes */
     private String id;
@@ -33,10 +33,13 @@ public class Actor extends DOSNAContent
     private NodeId key;
     private String hashedPassword;
 
+    /* References to other objects */
+    private NodeId notificationBoxNid;
+
     
     {
-        this.contentManager = ContentManager.createNew(this);
-        this.connectionManager = ConnectionsManager.createNew(this);
+        this.contentManager = ActorContentManager.createNew(this);
+        this.connectionManager = ActorConnectionsManager.createNew(this);
     }
 
     /**
@@ -66,13 +69,17 @@ public class Actor extends DOSNAContent
      */
     private void generateKey()
     {
-        int numRepeats = ((NodeId.ID_LENGTH / 8) / this.id.length()) + 1;
-        StringBuilder nodeId = new StringBuilder();
-        for (int i = 0; i < numRepeats; i++)
+        byte[] keyData = null;
+        try
         {
-            nodeId.append(this.id);
+            keyData = HashCalculator.sha1Hash(this.id);
         }
-        this.key = new NodeId(nodeId.substring(0, 20));
+        catch (NoSuchAlgorithmException ex)
+        {
+            /*@todo try some other hash here */
+            System.err.println("SHA-1 Hash algorithm isn't existent.");
+        }
+        this.key = new NodeId(keyData);
     }
 
     /**
@@ -171,7 +178,7 @@ public class Actor extends DOSNAContent
     /**
      * @return The ContentManager that manages this actors contents
      */
-    public ContentManager getContentManager()
+    public ActorContentManager getContentManager()
     {
         return this.contentManager;
     }
@@ -181,17 +188,38 @@ public class Actor extends DOSNAContent
      *
      * @param cm The new content manager
      */
-    public void setContentManager(final ContentManager cm)
+    public void setContentManager(final ActorContentManager cm)
     {
         this.contentManager = cm;
     }
 
     /**
+     * Add a new connection
+     *
+     * @param actorId The actor to connect to
+     */
+    public void addConnection(String actorId)
+    {
+        this.getConnectionManager().addConnection(new Relationship(this, actorId));
+        this.setUpdated();
+    }
+
+    /**
      * @return The ConnectionManager for this actor
      */
-    public ConnectionsManager getConnectionManager()
+    public ActorConnectionsManager getConnectionManager()
     {
         return this.connectionManager;
+    }
+
+    /**
+     * Sets the reference to the Notification Box Node ID on the network for this actor.
+     *
+     * @param notificationBoxNid
+     */
+    public void setNotificationBoxNid(NodeId notificationBoxNid)
+    {
+        this.notificationBoxNid = notificationBoxNid;
     }
 
     @Override
