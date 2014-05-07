@@ -2,8 +2,8 @@ package dosna.osn.status;
 
 import dosna.core.ContentMetadata;
 import dosna.dhtAbstraction.DataManager;
-import dosna.osn.homestream.HomeStreamContent;
-import dosna.osn.homestream.HomeStreamLoadingEventHandler;
+import dosna.osn.activitystream.ActivityStreamContent;
+import dosna.osn.activitystream.ActivityStreamLoadingEventHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,11 +17,11 @@ import kademlia.dht.StorageEntry;
  * @author Joshua Kissoon
  * @since 20140406
  */
-public class HomeStreamStatusesLoader implements HomeStreamLoadingEventHandler<Status>
+public class HomeStreamStatusesLoader implements ActivityStreamLoadingEventHandler<Status>
 {
 
     private final Collection<ContentMetadata> contentMD;
-    private final ArrayList<HomeStreamContent> statuses;
+    private final ArrayList<ActivityStreamContent> statuses;
 
     
     {
@@ -36,7 +36,7 @@ public class HomeStreamStatusesLoader implements HomeStreamLoadingEventHandler<S
     }
 
     @Override
-    public Collection<HomeStreamContent> loadContent(DataManager dataManager)
+    public Collection<ActivityStreamContent> loadContent(DataManager dataManager)
     {
         /* We have no statuses to load, just return an empty set */
         if (contentMD.isEmpty())

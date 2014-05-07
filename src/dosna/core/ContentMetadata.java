@@ -1,6 +1,6 @@
 package dosna.core;
 
-import dosna.dhtAbstraction.DOSNAContent;
+import dosna.content.DOSNAContent;
 import kademlia.node.NodeId;
 
 /**
@@ -68,16 +68,12 @@ public final class ContentMetadata implements Comparable<ContentMetadata>
     @Override
     public int compareTo(final ContentMetadata o)
     {
-        if (this == o)
-        {
-            return 0;
-        }
-        if (this.getLastUpdatedTimestamp() == o.getLastUpdatedTimestamp())
+        if (this.getKey().equals(o.getKey()))
         {
             return 0;
         }
 
-        return this.getLastUpdatedTimestamp() > o.getLastUpdatedTimestamp() ? 1 : 0;
+        return this.getLastUpdatedTimestamp() > o.getLastUpdatedTimestamp() ? 1 : -1;
     }
 
     @Override
