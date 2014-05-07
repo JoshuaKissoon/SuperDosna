@@ -48,7 +48,7 @@ public class ActivityStreamDataManager
         {
             try
             {
-                StorageEntry e = dataManager.get(cmd.getKey(), cmd.getType(), cmd.getOwnerId());
+                StorageEntry e = dataManager.getAndCache(cmd.getKey(), cmd.getType(), cmd.getOwnerId());
                 
                 /* @todo We need to figure out a way to make this more generic for different types of content */
                 Status s = (Status) new Status().fromBytes(e.getContent().getBytes());
