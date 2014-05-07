@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
@@ -180,7 +179,7 @@ public class ConnectionAddPanel extends JPanel
             try
             {
                 /* Now let's put this data back on the DHT */
-                if (dataManager.putLocallyAndUniversally(actor) > 0)
+                if (dataManager.putAndCache(actor) > 0)
                 {
                     JOptionPane.showMessageDialog(null, "You have successfully added this connection!! Congrats!");
                 }

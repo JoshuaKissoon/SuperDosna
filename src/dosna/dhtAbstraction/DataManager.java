@@ -34,24 +34,13 @@ public interface DataManager
     public int put(final DOSNAContent content) throws IOException;
 
     /**
-     * Stores data locally
+     * Stores data and cache a copy locally
      *
      * @param content The content to be stored locally
      *
      * @throws java.io.IOException
      */
-    public void putLocally(final DOSNAContent content) throws IOException;
-
-    /**
-     * Put the content on the local node and on the network.
-     *
-     * @param content The content to put
-     *
-     * @return Integer The number of nodes this content was put on, excluding the local node.
-     *
-     * @throws java.io.IOException
-     */
-    public int putLocallyAndUniversally(final DOSNAContent content) throws IOException;
+    public int putAndCache(final DOSNAContent content) throws IOException;
 
     /**
      * Get entries for the required data from the network
