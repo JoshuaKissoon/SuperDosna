@@ -1,6 +1,11 @@
 package dosna.content;
 
 import com.google.gson.Gson;
+import dosna.osn.actor.Actor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import kademlia.dht.KadContent;
 
 /**
@@ -11,43 +16,47 @@ import kademlia.dht.KadContent;
  * @author Joshua Kissoon
  * @since 20140326
  */
-public abstract class DOSNAContent implements KadContent
+public abstract class DOSNAContent implements KadContent, ActorRelatedContent
 {
-
+    
     public static final String TYPE = "DOSNAContent";
-
+    
     public final long createTs;
     public long updateTs;
 
+    /* Set of actors related to this content */
+    Map<String, String> relatedActors;
+    
     
     {
         this.createTs = this.updateTs = System.currentTimeMillis() / 1000L;
+        relatedActors = new HashMap<>();
     }
-
+    
     public DOSNAContent()
     {
-
+        
     }
-
+    
     @Override
     public long getCreatedTimestamp()
     {
         return this.createTs;
     }
-
+    
     @Override
     public long getLastUpdatedTimestamp()
     {
         return this.updateTs;
     }
-
+    
     @Override
     public byte[] toBytes()
     {
         Gson gson = new Gson();
         return gson.toJson(this).getBytes();
     }
-
+    
     @Override
     public DOSNAContent fromBytes(byte[] data)
     {
@@ -63,5 +72,46 @@ public abstract class DOSNAContent implements KadContent
     public void setUpdated()
     {
         this.updateTs = System.currentTimeMillis() / 1000L;
+    }
+
+    /**
+     * When adding an actor we store the actor's ID and the actor's relationship to this content
+     */
+    @Override
+    public void addActor(String userId, String relationship)
+    {
+        this.relatedActors.put(userId, relationship);
+    }
+    
+    @Override
+    public void addActor(Actor a, String relationship)
+    {
+        addActor(a.getId(), relationship);
+    }
+    
+    @Override
+    public List<String> getRelatedActors()
+    {
+        return new ArrayList<>(this.relatedActors.keySet());
+    }
+    
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder(this.getType());
+        
+        sb.append(": ");
+        
+        sb.append("[Actors: ");
+        
+        for (String a : this.relatedActors.keySet())
+        {
+            sb.append(a);
+            sb.append("; ");
+        }
+        
+        sb.append("]");
+        
+        return sb.toString();
     }
 }
