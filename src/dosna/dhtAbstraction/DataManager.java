@@ -93,6 +93,45 @@ public interface DataManager
     public StorageEntry get(final NodeId key, final String type, final String ownerId) throws IOException, NoSuchElementException, ContentNotFoundException;
 
     /**
+     * Get the content and also cache it.
+     *
+     * @param gp
+     *
+     * @return A single data entry
+     *
+     * @throws java.io.IOException
+     * @throws kademlia.exceptions.ContentNotFoundException
+     */
+    public StorageEntry getAndCache(final GetParameter gp) throws IOException, ContentNotFoundException;
+
+    /**
+     * Get the content and also cache it.
+     *
+     * @param key
+     * @param type
+     *
+     * @return A single data entry
+     *
+     * @throws java.io.IOException
+     * @throws kademlia.exceptions.ContentNotFoundException
+     */
+    public StorageEntry getAndCache(final NodeId key, final String type) throws IOException, ContentNotFoundException;
+
+    /**
+     * Get the content and also cache it.
+     *
+     * @param key
+     * @param type
+     * @param ownerId
+     *
+     * @return A single data entry
+     *
+     * @throws java.io.IOException
+     * @throws kademlia.exceptions.ContentNotFoundException
+     */
+    public StorageEntry getAndCache(final NodeId key, final String type, final String ownerId) throws IOException, ContentNotFoundException;
+
+    /**
      * Run an update call to update the data stored locally on this computer.
      * This may involve deleting some data and adding some other data.
      */
