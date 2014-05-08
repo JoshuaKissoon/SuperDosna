@@ -132,6 +132,8 @@ public class Simulation
         double dataSent = 0, dataReceived = 0, bootstrapTime = 0, avgContentLookupTime = 0;
         double avgContentLookupRouteLth = 0, avgActivityStreamLoadTime = 0;
         int numContentLookups = 0;
+        int numContentLookpusFUC = 0;
+        int numFUCUpdatesFound = 0;
 
         /* Aggregate the total user's data */
         for (int i = 0; i < config.numUsers(); i++)
@@ -144,6 +146,8 @@ public class Simulation
             dataReceived += statsMan.getTotalDataReceived();
             bootstrapTime += statsMan.getBootstrapTime();
             numContentLookups += statsMan.numContentLookups();
+            numContentLookpusFUC += statsMan.numContentLookupsFUC();
+            numFUCUpdatesFound += statsMan.numFUCUpdatesFound();
             avgContentLookupTime += statsMan.averageContentLookupTime();
             avgContentLookupRouteLth += statsMan.averageContentLookupRouteLength();
             avgActivityStreamLoadTime += dosnaStatsMan.avgActivityStreamLoadTime();
@@ -157,6 +161,8 @@ public class Simulation
         stats += "Avg Data Received: " + (dataReceived / numUsers) + " bytes; \n";
         stats += "Avg Bootstrap Time: " + df.format(bootstrapTime / numUsers) + " ms; \n";
         stats += "Avg # Content Lookups: " + (numContentLookups / (double) numUsers) + "; \n";
+        stats += "Avg # Content Lookups FUC: " + (numContentLookpusFUC / (double) numUsers) + "; \n";
+        stats += "Avg # FUC Updates Found: " + (numFUCUpdatesFound / (double) numUsers) + "; \n";
         stats += "Avg Content Lookup Time: " + df.format(avgContentLookupTime / numUsers) + " ms; \n";
         stats += "Avg Content Lookup Route Length: " + (avgContentLookupRouteLth / numUsers) + "; \n";
         stats += "Avg Activity Stream load time: " + df.format(avgActivityStreamLoadTime / numUsers) + " ms; \n";

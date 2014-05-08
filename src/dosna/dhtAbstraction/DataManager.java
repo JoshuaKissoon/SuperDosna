@@ -38,6 +38,8 @@ public interface DataManager
      *
      * @param content The content to be stored locally
      *
+     * @return How many nodes have this content been put on excluding the local node.
+     *
      * @throws java.io.IOException
      */
     public int putAndCache(final DOSNAContent content) throws IOException;
