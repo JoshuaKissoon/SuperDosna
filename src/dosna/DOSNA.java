@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import kademlia.dht.GetParameter;
 import kademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
-import kademlia.node.NodeId;
+import kademlia.node.KademliaId;
 
 /**
  * The main DOSNA launch file
@@ -41,7 +41,7 @@ public class DOSNA
      *
      * @return Boolean Whether the initialization was successful or not
      */
-    public boolean initRouting(String username, NodeId nid)
+    public boolean initRouting(String username, KademliaId nid)
     {
         if (dataManager == null)
         {

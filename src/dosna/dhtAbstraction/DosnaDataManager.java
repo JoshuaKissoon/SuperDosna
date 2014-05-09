@@ -10,7 +10,7 @@ import kademlia.KademliaNode;
 import kademlia.dht.KadContent;
 import kademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
-import kademlia.node.NodeId;
+import kademlia.node.KademliaId;
 
 /**
  * An implementation of the DataManager for this Application.
@@ -39,7 +39,7 @@ public final class DosnaDataManager implements DataManager
      * @throws java.net.UnknownHostException
      * @todo Try loading data from file, if no file exist, then create a new Kademlia instance
      */
-    public DosnaDataManager(final String ownerId, final NodeId nodeId, final int port) throws IOException, UnknownHostException
+    public DosnaDataManager(final String ownerId, final KademliaId nodeId, final int port) throws IOException, UnknownHostException
     {
         kad = new KademliaNode(ownerId, nodeId, port);
         kad.bootstrap(new DOSNAConfig().getBootstrapNode());
@@ -53,7 +53,7 @@ public final class DosnaDataManager implements DataManager
      *
      * @throws java.io.IOException
      */
-    public DosnaDataManager(final String ownerId, final NodeId nodeId) throws IOException
+    public DosnaDataManager(final String ownerId, final KademliaId nodeId) throws IOException
     {
         this(ownerId, nodeId, (int) ((Math.random() * 20000) + 5000));
     }
@@ -82,13 +82,13 @@ public final class DosnaDataManager implements DataManager
     }
 
     @Override
-    public StorageEntry get(NodeId key, String type) throws IOException, NoSuchElementException, ContentNotFoundException
+    public StorageEntry get(KademliaId key, String type) throws IOException, NoSuchElementException, ContentNotFoundException
     {
         return this.get(new GetParameter(key, type));
     }
 
     @Override
-    public StorageEntry get(NodeId key, String type, String ownerId) throws IOException, NoSuchElementException, ContentNotFoundException
+    public StorageEntry get(KademliaId key, String type, String ownerId) throws IOException, NoSuchElementException, ContentNotFoundException
     {
         return this.get(new GetParameter(key, type, ownerId));
     }
@@ -100,13 +100,13 @@ public final class DosnaDataManager implements DataManager
     }
 
     @Override
-    public StorageEntry getAndCache(NodeId key, String type) throws IOException, ContentNotFoundException
+    public StorageEntry getAndCache(KademliaId key, String type) throws IOException, ContentNotFoundException
     {
         return this.getAndCache(new GetParameter(key, type));
     }
 
     @Override
-    public StorageEntry getAndCache(NodeId key, String type, String ownerId) throws IOException, ContentNotFoundException
+    public StorageEntry getAndCache(KademliaId key, String type, String ownerId) throws IOException, ContentNotFoundException
     {
         return this.getAndCache(new GetParameter(key, type, ownerId));
     }
