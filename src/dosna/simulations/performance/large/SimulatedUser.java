@@ -22,7 +22,7 @@ import kademlia.node.KademliaId;
  * A user used in simulation; this user performs the actions of a user of the system.
  *
  * @author Joshua Kissoon
- * @since 20140502
+ * @since 20140508
  */
 public class SimulatedUser
 {
@@ -30,8 +30,6 @@ public class SimulatedUser
     private Actor actor;
     private final DOSNA dosna;
 
-    private String actorId;
-    private String name;
     private String password;
 
     public int userNumber;
@@ -45,10 +43,14 @@ public class SimulatedUser
     /* Set of users in the simulation */
     private final SimulatedUser[] users;
 
+    /* Whether this user is online or not */
+    private boolean isOnline;
+
     
     {
         this.dosna = new DOSNA();
         statistician = new DOSNAStatistician();
+        this.isOnline = false;
     }
 
     /**
@@ -80,8 +82,6 @@ public class SimulatedUser
         this.actor.setName(name);
         this.actor.setPassword(password);
 
-        this.actorId = actorId;
-        this.name = name;
         this.password = password;
 
         this.userNumber = userNumber;
@@ -96,11 +96,16 @@ public class SimulatedUser
 
     public boolean signup()
     {
-        DOSNA.SignupResult res = this.dosna.signupUser(this.actorId, this.password, this.name);
+        DOSNA.SignupResult res = this.dosna.signupUser(this.actor);
+
+        this.contentManager = new ContentManager(this.dosna.getDataManager());
 
         if (res.isSignupSuccessful)
         {
             this.actor = res.actor;
+            this.actor.init(this.dosna.getDataManager());
+            this.dosna.launchNotificationChecker(this.actor);
+            this.isOnline = true;
         }
 
         return res.isSignupSuccessful;
@@ -108,7 +113,7 @@ public class SimulatedUser
 
     public boolean login()
     {
-        DOSNA.LoginResult res = this.dosna.loginUser(this.actorId, this.password);
+        DOSNA.LoginResult res = this.dosna.loginUser(this.actor.getId(), this.password);
 
         this.contentManager = new ContentManager(this.dosna.getDataManager());
 
@@ -117,6 +122,7 @@ public class SimulatedUser
             this.actor = res.loggedInActor;
             this.actor.init(this.dosna.getDataManager());
             this.dosna.launchNotificationChecker(this.actor);
+            this.isOnline = true;
         }
 
         return res.isLoginSuccessful;
@@ -125,13 +131,16 @@ public class SimulatedUser
     /**
      * Log the user out and shutdown the system
      *
+     * @param saveState Whether to save the Node state or not
+     *
      * @return Whether logout and shutdown was successful or not
      */
-    public boolean logout()
+    public boolean logout(boolean saveState)
     {
         try
         {
-            this.dosna.getDataManager().shutdown(true);
+            this.dosna.getDataManager().shutdown(saveState);
+            this.isOnline = false;
             return true;
         }
         catch (IOException ex)
@@ -253,11 +262,10 @@ public class SimulatedUser
      *
      * @return Number of items on activity streams
      */
-    public int refreshActivityStream()
+    public Collection<DOSNAContent> refreshActivityStream()
     {
         ActivityStreamManager acm = new ActivityStreamManager(actor, this.dosna.getDataManager(), this.statistician);
-        Collection<DOSNAContent> cont = acm.getHomeStreamContent();
-        return cont.size();
+        return acm.getHomeStreamContent();
     }
 
     public void stopKadRefreshOperation()
@@ -280,4 +288,27 @@ public class SimulatedUser
         return this.statistician;
     }
 
+    /**
+     * @return Whether this user is online or not.
+     */
+    public boolean isOnline()
+    {
+        return this.isOnline;
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder("[Simulated User: ");
+
+        sb.append("{isOnline: ");
+        sb.append(this.isOnline());
+        sb.append("}");
+
+        sb.append(this.actor);
+
+        sb.append("]");
+
+        return sb.toString();
+    }
 }

@@ -2,6 +2,7 @@ package dosna;
 
 import dosna.dhtAbstraction.DataManager;
 import dosna.notification.NotificationBox;
+import dosna.osn.actor.Actor;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,22 +24,22 @@ public class PeriodicNotificationsChecker
 {
 
     private final DataManager dataManager;
-    private final String actorId;
+    private final Actor actor;
 
     private final Timer timer;
-    private final int period = 10 * 1000;   // every minute
-    private final long intialDelay = 10 * 1000; // 5 seconds
+    private final int period = 30 * 1000;   // in milliseconds
+    private final long intialDelay = 200 * 1000; // in milliseconds
 
     /**
      * Setup the class
      *
      * @param dataManager
-     * @param actorId     The ID of the logged in actor
+     * @param actor       The logged in actor
      */
-    public PeriodicNotificationsChecker(final DataManager dataManager, final String actorId)
+    public PeriodicNotificationsChecker(final DataManager dataManager, final Actor actor)
     {
         this.dataManager = dataManager;
-        this.actorId = actorId;
+        this.actor = actor;
 
         this.timer = new Timer(true);
     }
@@ -60,11 +61,10 @@ public class PeriodicNotificationsChecker
         @Override
         public void run()
         {
+            /* Generate a temp box so it will generate the key  */
+            NotificationBox temp = new NotificationBox(actor.getId());
             try
             {
-                /* Generate a temp box so it will generate the key  */
-                NotificationBox temp = new NotificationBox(actorId);
-
                 /* Retrieve this users notification box from the network */
                 StorageEntry e = dataManager.get(temp.getKey(), temp.getType());
                 NotificationBox nBox = (NotificationBox) new NotificationBox().fromBytes(e.getContent().getBytes());
@@ -73,16 +73,19 @@ public class PeriodicNotificationsChecker
                 {
                     /* Check if we have notifications and if we do, alert all of our consumers */
                     //System.out.println("We have Notifications:: " + nBox.getNotifications().size());
-                    
+
                     /* Now empty the notifications box and re-publish it on the network */
                     nBox.emptyBox();
                     dataManager.put(nBox);
                 }
-
             }
-            catch (IOException | ContentNotFoundException ex)
+            catch (ContentNotFoundException exe)
             {
-                System.err.println("Refresh Operation Failed; Message: " + ex.getMessage());
+                System.err.println(actor.getId() + " - PeriodicNotificationChecker - Notification box not found; BoxId: " + temp.getKey() + " Box owner: " + temp.getOwnerId());
+            }
+            catch (IOException ex)
+            {
+                System.err.println(actor.getId() + " - PeriodicNotificationChecker - Error occurred; Message: " + ex.getMessage());
             }
         }
     }

@@ -6,7 +6,7 @@ import java.util.concurrent.CountDownLatch;
  * This part of the simulation initializes the user objects.
  *
  * @author Joshua Kissoon
- * @since 20140502
+ * @since 20140508
  */
 public class SimulatedUserInitialization implements Runnable
 {
@@ -14,7 +14,6 @@ public class SimulatedUserInitialization implements Runnable
     private final SimulatedUser simulatedUser;
     private final SimConfig config;
     private final CountDownLatch threadsWaiter;
-    
 
     /**
      * Setup the simulated user
@@ -33,19 +32,8 @@ public class SimulatedUserInitialization implements Runnable
     @Override
     public void run()
     {
-        try
-        {
-            this.simulatedUser.signup();
-            Thread.sleep(config.randomWaitPeriod());
-            this.simulatedUser.login();
-            Thread.sleep(config.randomWaitPeriod());
-            
-            threadsWaiter.countDown();
-        }
-        catch (InterruptedException ex)
-        {
-
-        }
+        this.simulatedUser.signup();
+        threadsWaiter.countDown();
     }
 
 }
