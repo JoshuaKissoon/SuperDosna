@@ -6,6 +6,7 @@ import java.io.IOException;
 import kademlia.dht.GetParameter;
 import kademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
+import kademlia.node.Node;
 
 /**
  * A class that handles actors on the DOSN.
@@ -65,5 +66,56 @@ public class ActorManager
         GetParameter gp = new GetParameter(a.getKey(), a.getType(), a.getId());
         StorageEntry se = dataManager.getAndCache(gp);
         return (Actor) new Actor().fromBytes(se.getContent().getBytes());
+    }
+
+    /**
+     * Put the updated actor object on the DHT.
+     *
+     * We cache the actor object locally also since we only update actor objects of connections and the local user.
+     *
+     * @param actor The actor object to update
+     */
+    public void updateActorOnDHT(final Actor actor)
+    {
+        try
+        {
+            this.dataManager.putAndCache(actor);
+        }
+        catch (IOException ex)
+        {
+            System.err.println("ActorManager.updateActorOnDHT() failed to update actor. Msg: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * To use some of the features of SocialKad, an actor's node must be placed on the actor's profile for others to find it.
+     *
+     * This method is called to update the actor node if it has changed.
+     *
+     * We first check if the node is changed, and do an update only if it has changed.
+     *
+     * @param actor   The actor to update
+     * @param newNode The new actor's node
+     */
+    public void updateActorNode(final Actor actor, final Node newNode)
+    {
+        Node old = actor.getActorNode();
+
+        /* Check if there is a difference in the old and new node, and update the actor object with the new node if there is */
+        boolean isDifference = false;
+        if (!old.equals(newNode))
+        {
+            isDifference = true;
+        }
+        else if (old.getSocketAddress().equals(newNode.getSocketAddress()))
+        {
+            isDifference = true;
+        }
+
+        if (isDifference)
+        {
+            actor.setActorNode(newNode);
+            this.updateActorOnDHT(actor);
+        }
     }
 }

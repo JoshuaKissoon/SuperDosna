@@ -139,6 +139,9 @@ public class DOSNA
             Actor actor = (Actor) new Actor().fromBytes(items.getContent().getBytes());
             if (actor.isPassword(password))
             {
+                /* Actor is logged in, lets update the actor's node */
+                new ActorManager(this.dataManager).updateActorNode(actor, this.dataManager.getKademliaNode().getNode());
+                
                 return new LoginResult(actor, true);
             }
         }
@@ -251,7 +254,7 @@ public class DOSNA
 
             /* See if this user object already exists on the network */
             GetParameter gp = new GetParameter(actor.getKey(), actor.getType(), actor.getId());
-            StorageEntry item = dataManager.get(gp);
+            dataManager.get(gp);
 
             /* Username is already taken */
             return new SignupResult(false);
@@ -261,6 +264,7 @@ public class DOSNA
             try
             {
                 /* Lets add this user to the system */
+                actor.setActorNode(this.dataManager.getKademliaNode().getNode());
                 ActorManager ac = new ActorManager(dataManager);
                 Actor createdActor = ac.createActor(actor);
 

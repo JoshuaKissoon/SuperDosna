@@ -6,6 +6,7 @@ import dosna.util.HashCalculator;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import kademlia.node.KademliaId;
+import kademlia.node.Node;
 
 /**
  * Any type of user/group within the system of the system
@@ -35,6 +36,9 @@ public class Actor extends DOSNAContent
 
     /* References to other objects */
     private KademliaId notificationBoxNid;
+
+    /* The node related to this actor */
+    private Node actorNode;
 
     
     {
@@ -155,6 +159,26 @@ public class Actor extends DOSNAContent
         {
             return new BigInteger(1, password.getBytes()).multiply(new BigInteger(1, salt.getBytes())).toString(16);
         }
+    }
+
+    /**
+     * Update this actor's node
+     *
+     * @param newNode The new node
+     */
+    public void setActorNode(final Node newNode)
+    {
+        this.actorNode = newNode;
+    }
+
+    /**
+     * Get the node related to this actor.
+     *
+     * @return The actor's node.
+     */
+    public Node getActorNode()
+    {
+        return this.actorNode;
     }
 
     @Override
