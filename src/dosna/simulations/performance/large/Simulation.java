@@ -4,6 +4,7 @@ import dosna.core.DOSNAStatistician;
 import java.text.DecimalFormat;
 import java.util.concurrent.CountDownLatch;
 import kademlia.KadStatistician;
+import kademlia.SocialKadStatistician;
 
 /**
  * The class that launches the simulation and aggregates the statistics after the completion of the simulation.
@@ -309,6 +310,8 @@ public class Simulation
         double dataSent = 0, dataReceived = 0, bootstrapTime = 0, avgContentLookupTime = 0;
         double avgContentLookupRouteLth = 0, avgActivityStreamLoadTime = 0;
         int numContentLookups = 0;
+        int numContentLookpusFUC = 0;
+        int numFUCUpdatesFound = 0;
 
         /* Aggregate the total user's data */
         for (int i = 0; i < config.numUsers(); i++)
@@ -317,13 +320,15 @@ public class Simulation
 
             if (simUser.isOnline())
             {
-                KadStatistician statsMan = simUser.getKademliaNode().getStatistician();
+                SocialKadStatistician statsMan = simUser.getKademliaNode().getStatistician();
                 DOSNAStatistician dosnaStatsMan = simUser.getStatistician();
 
                 dataSent += statsMan.getTotalDataSent();
                 dataReceived += statsMan.getTotalDataReceived();
                 bootstrapTime += statsMan.getBootstrapTime();
                 numContentLookups += statsMan.numContentLookups();
+                numContentLookpusFUC += statsMan.numContentLookupsFUC();
+                numFUCUpdatesFound += statsMan.numFUCUpdatesFound();
                 avgContentLookupTime += statsMan.averageContentLookupTime();
                 avgContentLookupRouteLth += statsMan.averageContentLookupRouteLength();
                 avgActivityStreamLoadTime += dosnaStatsMan.avgActivityStreamLoadTime();
@@ -334,10 +339,12 @@ public class Simulation
         DecimalFormat df = new DecimalFormat("#.00");
         int numUsers = this.config.numUsers();
         String stats = "\nAverage Statistics for " + numUsers + " users; " + this.config.numOfflineUsers() + " offline (offline user stats not incl.); \n";
-        stats += "Avg Data Sent: " + (dataSent / numUsers) + " KBs; \n";
-        stats += "Avg Data Received: " + (dataReceived / numUsers) + " KBs; \n";
+        stats += "Avg Data Sent: " + df.format(dataSent / numUsers) + " KBs; \n";
+        stats += "Avg Data Received: " + df.format(dataReceived / numUsers) + " KBs; \n";
         stats += "Avg Bootstrap Time: " + df.format(bootstrapTime / numUsers) + " ms; \n";
         stats += "Avg # Content Lookups: " + (numContentLookups / (double) numUsers) + "; \n";
+        stats += "Avg # Content Lookups FUC: " + (numContentLookpusFUC / (double) numUsers) + "; \n";
+        stats += "Avg # FUC Updates Found: " + (numFUCUpdatesFound / (double) numUsers) + "; \n";
         stats += "Avg Content Lookup Time: " + df.format(avgContentLookupTime / numUsers) + " ms; \n";
         stats += "Avg Content Lookup Route Length: " + df.format(avgContentLookupRouteLth / numUsers) + "; \n";
         stats += "Avg Activity Stream load time: " + df.format(avgActivityStreamLoadTime / numUsers) + " ms; \n";
