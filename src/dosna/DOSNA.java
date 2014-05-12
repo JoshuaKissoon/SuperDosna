@@ -25,6 +25,7 @@ public class DOSNA
 {
 
     private DataManager dataManager = null;
+    private PeriodicNotificationsChecker notificationsChecker;
 
     public DOSNA()
     {
@@ -141,7 +142,7 @@ public class DOSNA
             {
                 /* Actor is logged in, lets update the actor's node */
                 new ActorManager(this.dataManager).updateActorNode(actor, this.dataManager.getKademliaNode().getNode());
-                
+
                 return new LoginResult(actor, true);
             }
         }
@@ -348,13 +349,26 @@ public class DOSNA
      */
     public void launchNotificationChecker(final Actor actor)
     {
-        PeriodicNotificationsChecker pnc = new PeriodicNotificationsChecker(this.dataManager, actor);
-        pnc.startTimer();
+        notificationsChecker = new PeriodicNotificationsChecker(this.dataManager, actor);
+        notificationsChecker.startTimer();
     }
 
     public DataManager getDataManager()
     {
         return this.dataManager;
+    }
+
+    /**
+     * Shuts down the core components of dosna
+     *
+     * @param saveState
+     *
+     * @throws java.io.IOException
+     */
+    public void shutdown(boolean saveState) throws IOException
+    {
+        this.dataManager.shutdown(saveState);
+        this.notificationsChecker.shutdown();
     }
 
     /**
