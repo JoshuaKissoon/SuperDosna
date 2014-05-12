@@ -3,7 +3,6 @@ package dosna.simulations.performance.large;
 import dosna.core.DOSNAStatistician;
 import java.text.DecimalFormat;
 import java.util.concurrent.CountDownLatch;
-import kademlia.KadStatistician;
 import kademlia.SocialKadStatistician;
 
 /**

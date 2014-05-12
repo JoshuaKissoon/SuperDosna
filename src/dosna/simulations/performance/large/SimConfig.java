@@ -14,52 +14,52 @@ public class SimConfig
 {
 
     /* Number of users in the simulation */
-    public final static int N = 500;
+    public final static int N = 5;
 
     /* Number of users that should be offline */
-    public final static int NUMBER_OFFLINE_USERS = 150;
+    public final static int NUMBER_OFFLINE_USERS = 5;
 
     /* How much users to put offline at a time */
     public final static int NUM_USERS_PER_OFFLINE_SET = 10;
 
     /* Number of users to process per set */
-    public final static int SET_SIZE = 50;
+    public final static int SET_SIZE = 5;
 
     /* Number of users to process per activity set */
-    public final static int ACTIVITIES_SET_SIZE = 20;
+    public final static int ACTIVITIES_SET_SIZE = 5;
 
     /* How much time (in milliseconds) to wait between processing sets */
-    public final static long INTER_SET_WAIT = 30 * 1000;
+    public final static long INTER_SET_WAIT = 1 * 1000;
 
     /* How much time (in milliseconds) to wait between processing "putting users offline" sets */
-    public final static long INTER_USERS_OFFLINE_SET_WAIT = 100 * 1000; // Long wait so refresh activities can be ran
+    public final static long INTER_USERS_OFFLINE_SET_WAIT = 1 * 1000; // Long wait so refresh activities can be ran
 
 
     /* How much time (in milliseconds) to wait between each user running their activities */
     public final static long INTER_ACTIVITY_USER_WAIT = 8 * 1000;
 
     /* How long should we delay between creating users on the network */
-    private final static int USER_CREATION_DELAY = 1000;
+    private final static int USER_CREATION_DELAY = 100;
 
     /* Initial details of a user */
-    private final static int NUM_INITIAL_CONTENT = 20;
-    private final static int NUM_INITIAL_CONNECTIONS = 20;
+    private final static int NUM_INITIAL_CONTENT = 2;
+    private final static int NUM_INITIAL_CONNECTIONS = 2;
 
     /* The number of times a user can perform the activities */
-    private final static int NUM_CONTENT = 5;
-    private final static int NUM_CONNECTIONS = 5;
-    private final static int NUM_ACTIVITY_STREAM_REFRESHES = 6;
-    private final static int NUM_CONTENT_MODIFICATIONS = 5;
+    private final static int NUM_CONTENT = 2;
+    private final static int NUM_CONNECTIONS = 2;
+    private final static int NUM_ACTIVITY_STREAM_REFRESHES = 3;
+    private final static int NUM_CONTENT_MODIFICATIONS = 2;
 
     /**
      * Maximum and minimum wait period (in ms) before a user does another activity,
      * the user simulation class will wait a random time between this period.
      */
     private final static int MIN_WAIT_PERIOD = 1500;
-    private final static int MAX_WAIT_PERIOD = 5000;
+    private final static int MAX_WAIT_PERIOD = 2000;
 
     private final static int MIN_LONG_WAIT_PERIOD = 1500;
-    private final static int MAX_LONG_WAIT_PERIOD = 7500;
+    private final static int MAX_LONG_WAIT_PERIOD = 2500;
 
     /**
      * @return The number of users in the simulation
