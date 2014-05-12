@@ -30,7 +30,7 @@ public class Bootstrapper extends JFrame
     private final static int FRAME_WIDTH = 1600;
     private final static int FRAME_HEIGHT = 800;
     private final static String BOOTSTRAP_OWNER_ID = "DOSNA";   // Owner id of the bootstrap kademlia instance
-    private final static int BOOTSTRAP_NODE_PORT = 15049;
+    private final static int BOOTSTRAP_NODE_PORT = 35049;
 
     /* Display the contacts of the bootstrap node */
     private JTextArea contacts;

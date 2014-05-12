@@ -21,6 +21,6 @@ public class DOSNAConfig
      */
     public Node getBootstrapNode() throws UnknownHostException
     {
-        return new Node(new KademliaId("BOOTSTRAPBOOTSTRAPBO"), InetAddress.getLocalHost(), 15049);
+        return new Node(new KademliaId("BOOTSTRAPBOOTSTRAPBO"), InetAddress.getLocalHost(), 35049);
     }
 }

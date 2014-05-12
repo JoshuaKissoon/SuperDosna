@@ -57,7 +57,7 @@ public abstract class DOSNAContent implements KadContent, ActorRelatedContent, S
     }
 
     @Override
-    public byte[] toBytes()
+    public String toSerializedForm()
     {
         Gson gson = new Gson();
 //        try (
@@ -73,11 +73,11 @@ public abstract class DOSNAContent implements KadContent, ActorRelatedContent, S
 //            ex.printStackTrace();
 //        }
 
-        return gson.toJson(this).getBytes();
+        return gson.toJson(this);
     }
 
     @Override
-    public DOSNAContent fromBytes(byte[] data)
+    public DOSNAContent fromSerializedForm(String data)
     {
 //        try (ByteArrayInputStream bin = new ByteArrayInputStream(data);
 //                ObjectInputStream oin = new ObjectInputStream(bin))
@@ -92,7 +92,7 @@ public abstract class DOSNAContent implements KadContent, ActorRelatedContent, S
 //            ex.printStackTrace();
 //        }
         Gson gson = new Gson();
-        DOSNAContent val = gson.fromJson(new String(data), this.getClass());
+        DOSNAContent val = gson.fromJson(data, this.getClass());
         return val;
     }
 
