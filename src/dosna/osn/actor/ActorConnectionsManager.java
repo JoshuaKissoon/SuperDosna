@@ -81,6 +81,7 @@ public class ActorConnectionsManager implements Serializable
         }
         else
         {
+            /** Add the connection to our list of connections */
             return this.connections.add(rel);
         }
     }

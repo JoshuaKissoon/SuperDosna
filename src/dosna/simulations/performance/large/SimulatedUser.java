@@ -233,6 +233,21 @@ public class SimulatedUser
     {
         this.actor.addConnection(connActor.getId());
 
+        try
+        {
+            /**
+             * Lets retrieve the actor object for this connection and add it's node to our node's routing table
+             *
+             * @todo Also do this in our connection add form
+             */
+            Actor conn = new ActorManager(this.dosna.getDataManager()).loadActor(connActor.getId());
+            this.dosna.getDataManager().getKademliaNode().getRoutingTable().insertConnection(conn.getId(), conn.getActorNode());
+        }
+        catch (IOException | ContentNotFoundException ex)
+        {
+
+        }
+
         /* Update the actor object online */
         this.contentManager.updateContent(this.actor);
     }
