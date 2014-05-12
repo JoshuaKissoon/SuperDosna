@@ -92,6 +92,7 @@ public abstract class DOSNAContent implements KadContent, ActorRelatedContent, S
 //            ex.printStackTrace();
 //        }
         Gson gson = new Gson();
+        System.out.println("\nfromSerializedForm().Data: \n" + new String(data));
         DOSNAContent val = gson.fromJson(new String(data), this.getClass());
         return val;
     }

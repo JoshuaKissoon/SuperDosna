@@ -88,13 +88,7 @@ public class ActorContentManager implements Serializable
 
             if (numStored > 0)
             {
-                /* The data was stored online!, lets store it here now*/
-                if (!this.actorContent.containsKey(content.getType()))
-                {
-                    this.actorContent.put(content.getType(), new TreeSet<>());
-                }
-
-                this.actorContent.get(content.getType()).add(new ContentMetadata(content));
+                this.addContentToActorContentSet(content);
             }
 
             /* Lets also update the actor object on the DHT */
@@ -108,6 +102,17 @@ public class ActorContentManager implements Serializable
             /* Just re-throw this exception and return */
             throw new IOException(e);
         }
+    }
+
+    public void addContentToActorContentSet(final DOSNAContent content)
+    {
+        /* The data was stored online!, lets store it here now*/
+        if (!this.actorContent.containsKey(content.getType()))
+        {
+            this.actorContent.put(content.getType(), new TreeSet<>());
+        }
+
+        this.actorContent.get(content.getType()).add(new ContentMetadata(content));
     }
 
     /**
