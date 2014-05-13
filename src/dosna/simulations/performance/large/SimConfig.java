@@ -10,56 +10,56 @@ import java.util.UUID;
  * @author Joshua Kissoon
  * @since 20140508
  */
-public class SimConfig
+public class SimConfig implements SimulationConfiguration
 {
 
     /* Number of users in the simulation */
-    public final static int N = 5;
+    public final static int N = 500;
 
     /* Number of users that should be offline */
-    public final static int NUMBER_OFFLINE_USERS = 5;
+    public final static int NUMBER_OFFLINE_USERS = 250;
 
     /* How much users to put offline at a time */
     public final static int NUM_USERS_PER_OFFLINE_SET = 10;
 
     /* Number of users to process per set */
-    public final static int SET_SIZE = 5;
+    public final static int SET_SIZE = 50;
 
     /* Number of users to process per activity set */
-    public final static int ACTIVITIES_SET_SIZE = 5;
+    public final static int ACTIVITIES_SET_SIZE = 25;
 
     /* How much time (in milliseconds) to wait between processing sets */
-    public final static long INTER_SET_WAIT = 1 * 1000;
+    public final static long INTER_SET_WAIT = 30 * 1000;
 
     /* How much time (in milliseconds) to wait between processing "putting users offline" sets */
-    public final static long INTER_USERS_OFFLINE_SET_WAIT = 1 * 1000; // Long wait so refresh activities can be ran
+    public final static long INTER_USERS_OFFLINE_SET_WAIT = 60 * 1000; // Long wait so refresh activities can be ran
 
 
     /* How much time (in milliseconds) to wait between each user running their activities */
     public final static long INTER_ACTIVITY_USER_WAIT = 8 * 1000;
 
     /* How long should we delay between creating users on the network */
-    private final static int USER_CREATION_DELAY = 100;
+    private final static int USER_CREATION_DELAY = 1000;
 
     /* Initial details of a user */
-    private final static int NUM_INITIAL_CONTENT = 2;
-    private final static int NUM_INITIAL_CONNECTIONS = 2;
+    private final static int NUM_INITIAL_CONTENT = 20;
+    private final static int NUM_INITIAL_CONNECTIONS = 20;
 
     /* The number of times a user can perform the activities */
-    private final static int NUM_CONTENT = 2;
-    private final static int NUM_CONNECTIONS = 2;
-    private final static int NUM_ACTIVITY_STREAM_REFRESHES = 3;
-    private final static int NUM_CONTENT_MODIFICATIONS = 2;
+    private final static int NUM_CONTENT = 5;
+    private final static int NUM_CONNECTIONS = 5;
+    private final static int NUM_ACTIVITY_STREAM_REFRESHES = 6;
+    private final static int NUM_CONTENT_MODIFICATIONS = 5;
 
     /**
      * Maximum and minimum wait period (in ms) before a user does another activity,
      * the user simulation class will wait a random time between this period.
      */
     private final static int MIN_WAIT_PERIOD = 1500;
-    private final static int MAX_WAIT_PERIOD = 2000;
+    private final static int MAX_WAIT_PERIOD = 5000;
 
     private final static int MIN_LONG_WAIT_PERIOD = 1500;
-    private final static int MAX_LONG_WAIT_PERIOD = 2500;
+    private final static int MAX_LONG_WAIT_PERIOD = 5000;
 
     /**
      * @return The number of users in the simulation
@@ -211,33 +211,5 @@ public class SimConfig
 
         /* If the value is less than the minimum wait period, we add the minimum wait to the value */
         return (val < MIN_LONG_WAIT_PERIOD) ? val + MIN_LONG_WAIT_PERIOD : val;
-    }
-
-    /**
-     * Generate a random string
-     *
-     * @return the random string
-     */
-    public String randomString()
-    {
-        StringBuilder ret = new StringBuilder();
-
-        for (int i = 0; i < (int) (Math.random() * 10) + 2; i++)
-        {
-            ret.append(UUID.randomUUID().toString());
-            ret.append(" ");
-        }
-
-        return ret.toString();
-    }
-
-    /**
-     * Generate a random string
-     *
-     * @return the random string
-     */
-    public String randomStringShort()
-    {
-        return UUID.randomUUID().toString();
     }
 }

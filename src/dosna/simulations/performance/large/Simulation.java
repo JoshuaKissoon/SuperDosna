@@ -16,7 +16,7 @@ import kademlia.SocialKadStatistician;
 public class Simulation
 {
 
-    private final SimConfig config;
+    private final SimulationConfiguration config;
     private final SimulatedUser[] users;
 
     /* A count down latch to wait for all threads to execute */
