@@ -337,13 +337,13 @@ public class Simulation
         /* Print the Statistics */
         DecimalFormat df = new DecimalFormat("#.00");
         int numUsers = this.config.numUsers();
-        String stats = "\nAverage Statistics for " + numUsers + " users; " + this.config.numOfflineUsers() + " offline (offline user stats not incl.); \n";
+        String stats = "\nAverage Statistics for SuperDosna for " + numUsers + " users; " + this.config.numOfflineUsers() + " offline (offline user stats not incl.); \n";
         stats += "Avg Data Sent: " + df.format(dataSent / numUsers) + " KBs; \n";
         stats += "Avg Data Received: " + df.format(dataReceived / numUsers) + " KBs; \n";
         stats += "Avg Bootstrap Time: " + df.format(bootstrapTime / numUsers) + " ms; \n";
-        stats += "Avg # Content Lookups: " + (numContentLookups / (double) numUsers) + "; \n";
-        stats += "Avg # Content Lookups FUC: " + (numContentLookpusFUC / (double) numUsers) + "; \n";
-        stats += "Avg # FUC Updates Found: " + (numFUCUpdatesFound / (double) numUsers) + "; \n";
+        stats += "Avg # Content Lookups: " + df.format(numContentLookups / (double) numUsers) + "; \n";
+        stats += "Avg # Content Lookups FUC: " + df.format(numContentLookpusFUC / (double) numUsers) + "; \n";
+        stats += "Avg # FUC Updates Found: " + df.format(numFUCUpdatesFound / (double) numUsers) + "; \n";
         stats += "Avg Content Lookup Time: " + df.format(avgContentLookupTime / numUsers) + " ms; \n";
         stats += "Avg Content Lookup Route Length: " + df.format(avgContentLookupRouteLth / numUsers) + "; \n";
         stats += "Avg Activity Stream load time: " + df.format(avgActivityStreamLoadTime / numUsers) + " ms; \n";
