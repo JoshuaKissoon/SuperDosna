@@ -24,7 +24,7 @@ public class Simulation
 
     public Simulation()
     {
-        this.config = new SimConfig50Online();
+        this.config = new SimConfig();
         this.users = new SimulatedUser[config.numUsers()];
     }
 
