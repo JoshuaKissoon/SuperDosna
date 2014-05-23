@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import kademlia.KademliaNode;
-import kademlia.dht.StorageEntry;
+import socialkademlia.JKademliaNode;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 
@@ -288,7 +288,7 @@ public class SimulatedUser
         this.dosna.getDataManager().getKademliaNode().stopRefreshOperation();
     }
 
-    public KademliaNode getKademliaNode()
+    public JKademliaNode getKademliaNode()
     {
         return this.dosna.getDataManager().getKademliaNode();
     }

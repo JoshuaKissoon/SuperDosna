@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import kademlia.dht.StorageEntry;
-import kademlia.dht.util.StorageEntryCompressor;
+import socialkademlia.dht.StorageEntry;
+import socialkademlia.dht.util.StorageEntryCompressor;
 import kademlia.util.serializer.JsonSerializer;
 import kademlia.util.serializer.KadSerializer;
 

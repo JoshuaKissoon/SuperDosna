@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import kademlia.dht.GetParameter;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 

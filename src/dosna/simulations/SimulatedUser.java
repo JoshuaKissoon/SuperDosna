@@ -7,7 +7,7 @@ import dosna.osn.actor.Actor;
 import dosna.osn.actor.ActorManager;
 import dosna.osn.status.Status;
 import java.io.IOException;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 

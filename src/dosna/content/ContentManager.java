@@ -5,7 +5,7 @@ import dosna.notification.Notification;
 import dosna.notification.NotificationBox;
 import java.io.IOException;
 import java.util.List;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 
 /**

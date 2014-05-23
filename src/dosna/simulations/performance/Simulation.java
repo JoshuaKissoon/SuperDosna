@@ -3,7 +3,7 @@ package dosna.simulations.performance;
 import dosna.core.DOSNAStatistician;
 import java.text.DecimalFormat;
 import java.util.concurrent.CountDownLatch;
-import kademlia.SocialKadStatistician;
+import socialkademlia.SocialKadStatistician;
 
 /**
  * The class that launches the simulation and aggregates the statistics after the completion of the simulation.

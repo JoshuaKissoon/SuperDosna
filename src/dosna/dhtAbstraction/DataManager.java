@@ -3,10 +3,10 @@ package dosna.dhtAbstraction;
 import dosna.content.DOSNAContent;
 import java.io.IOException;
 import java.util.NoSuchElementException;
-import kademlia.KademliaNode;
+import socialkademlia.JKademliaNode;
 import kademlia.dht.GetParameter;
 import kademlia.dht.KadContent;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 
@@ -138,9 +138,9 @@ public interface DataManager
     public void shutdown(final boolean saveState) throws IOException;
 
     /**
-     * @return The KademliaNode used by this DataManager
+     * @return The JKademliaNode used by this DataManager
      */
-    public KademliaNode getKademliaNode();
+    public JKademliaNode getKademliaNode();
 
     /**
      * Stores the specified value under the given key locally;

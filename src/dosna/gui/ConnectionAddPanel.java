@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import kademlia.dht.GetParameter;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 
 /**

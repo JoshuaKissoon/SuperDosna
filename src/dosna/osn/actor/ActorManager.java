@@ -4,7 +4,7 @@ import dosna.dhtAbstraction.DataManager;
 import dosna.notification.NotificationBox;
 import java.io.IOException;
 import kademlia.dht.GetParameter;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.Node;
 

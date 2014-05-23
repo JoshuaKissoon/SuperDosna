@@ -3,9 +3,9 @@ package dosna.simulations;
 import dosna.notification.Notification;
 import dosna.notification.NotificationBox;
 import java.io.IOException;
-import kademlia.KademliaNode;
+import socialkademlia.JKademliaNode;
 import kademlia.dht.GetParameter;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 
@@ -22,8 +22,8 @@ public class NotificationBoxSimulation
     {
         try
         {
-            KademliaNode kad = new KademliaNode("Joshua", new KademliaId("JOSHUAJOSHUAJOSHUAJO"), 3445);
-            KademliaNode kad2 = new KademliaNode("Joshua2", new KademliaId("JOSHUAJOSHUAJOSHUAJK"), 3446);
+            JKademliaNode kad = new JKademliaNode("Joshua", new KademliaId("JOSHUAJOSHUAJOSHUAJO"), 3445);
+            JKademliaNode kad2 = new JKademliaNode("Joshua2", new KademliaId("JOSHUAJOSHUAJOSHUAJK"), 3446);
 
             kad.bootstrap(kad2.getNode());
 

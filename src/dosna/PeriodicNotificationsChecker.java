@@ -6,7 +6,7 @@ import dosna.osn.actor.Actor;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-import kademlia.dht.StorageEntry;
+import socialkademlia.dht.StorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 
 /**
