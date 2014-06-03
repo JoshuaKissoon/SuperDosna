@@ -13,8 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import socialkademlia.JKademliaNode;
-import socialkademlia.dht.StorageEntry;
+import socialkademlia.JSocialKademliaNode;
+import socialkademlia.dht.JSocialKademliaStorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 
@@ -164,7 +164,7 @@ public class SimulatedUser
 
     public Status loadStatus(KademliaId statusId) throws IOException, ContentNotFoundException
     {
-        StorageEntry e = this.dosna.getDataManager().get(statusId, Status.TYPE);
+        JSocialKademliaStorageEntry e = this.dosna.getDataManager().get(statusId, Status.TYPE);
         return (Status) new Status().fromSerializedForm(e.getContent());
     }
 
@@ -208,7 +208,7 @@ public class SimulatedUser
         /* Load this content, and update it */
         try
         {
-            StorageEntry e = this.dosna.getDataManager().get(selectedContent.getKey(), selectedContent.getType(), selectedContent.getOwnerId());
+            JSocialKademliaStorageEntry e = this.dosna.getDataManager().get(selectedContent.getKey(), selectedContent.getType(), selectedContent.getOwnerId());
             Status cc = (Status) new Status().fromSerializedForm(e.getContent());
             this.updateContent(cc);
         }
@@ -269,7 +269,7 @@ public class SimulatedUser
         this.dosna.getDataManager().getKademliaNode().stopRefreshOperation();
     }
 
-    public JKademliaNode getKademliaNode()
+    public JSocialKademliaNode getKademliaNode()
     {
         return this.dosna.getDataManager().getKademliaNode();
     }

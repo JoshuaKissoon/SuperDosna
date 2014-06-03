@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import socialkademlia.dht.StorageEntry;
+import socialkademlia.dht.JSocialKademliaStorageEntry;
 import socialkademlia.dht.util.StorageEntryCompressor;
 import kademlia.util.serializer.JsonSerializer;
 import kademlia.util.serializer.KadSerializer;
@@ -40,7 +40,7 @@ public class SomeTest
         actor.getContentManager().addContentToActorContentSet(s3);
         actor.getContentManager().addContentToActorContentSet(s4);
         
-        StorageEntry entry = new StorageEntry(actor);
+        JSocialKademliaStorageEntry entry = new JSocialKademliaStorageEntry(actor);
         
         System.out.println(entry);
         System.out.println("\n\n\n");
@@ -50,7 +50,7 @@ public class SomeTest
         System.out.println("Entry: " + entry);
         System.out.println("\n\n\n");
         
-        KadSerializer<StorageEntry> serializer = new JsonSerializer<>();
+        KadSerializer<JSocialKademliaStorageEntry> serializer = new JsonSerializer<>();
         String fileName = "some file.kct";
         try (FileOutputStream fout = new FileOutputStream(fileName);
                 DataOutputStream dout = new DataOutputStream(fout))
@@ -59,7 +59,7 @@ public class SomeTest
         }
         
         DataInputStream din = new DataInputStream(new FileInputStream(fileName));
-        StorageEntry retrievedEntry = serializer.read(din);
+        JSocialKademliaStorageEntry retrievedEntry = serializer.read(din);
         
         retrievedEntry = StorageEntryCompressor.decompress(retrievedEntry);
         System.out.println(retrievedEntry);

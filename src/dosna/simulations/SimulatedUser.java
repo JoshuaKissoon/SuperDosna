@@ -7,7 +7,7 @@ import dosna.osn.actor.Actor;
 import dosna.osn.actor.ActorManager;
 import dosna.osn.status.Status;
 import java.io.IOException;
-import socialkademlia.dht.StorageEntry;
+import socialkademlia.dht.JSocialKademliaStorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 
@@ -111,7 +111,7 @@ public class SimulatedUser
 
     public Status loadStatus(KademliaId statusId) throws IOException, ContentNotFoundException
     {
-        StorageEntry e = this.dosna.getDataManager().get(statusId, Status.TYPE);
+        JSocialKademliaStorageEntry e = this.dosna.getDataManager().get(statusId, Status.TYPE);
         return (Status) new Status().fromSerializedForm(e.getContent());
     }
 

@@ -6,7 +6,7 @@ import dosna.osn.actor.Actor;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-import socialkademlia.dht.StorageEntry;
+import socialkademlia.dht.JSocialKademliaStorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 
 /**
@@ -68,7 +68,7 @@ public class PeriodicNotificationsChecker
             try
             {
                 /* Retrieve this users notification box from the network */
-                StorageEntry e = dataManager.get(temp.getKey(), temp.getType());
+                JSocialKademliaStorageEntry e = dataManager.get(temp.getKey(), temp.getType());
                 NotificationBox nBox = (NotificationBox) new NotificationBox().fromSerializedForm(e.getContent());
 
                 if (nBox.hasNotifications())

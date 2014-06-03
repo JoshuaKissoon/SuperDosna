@@ -3,10 +3,10 @@ package dosna.dhtAbstraction;
 import dosna.content.DOSNAContent;
 import java.io.IOException;
 import java.util.NoSuchElementException;
-import socialkademlia.JKademliaNode;
+import socialkademlia.JSocialKademliaNode;
 import kademlia.dht.GetParameter;
 import kademlia.dht.KadContent;
-import socialkademlia.dht.StorageEntry;
+import socialkademlia.dht.JSocialKademliaStorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.KademliaId;
 
@@ -54,7 +54,7 @@ public interface DataManager
      * @throws java.io.IOException
      * @throws kademlia.exceptions.ContentNotFoundException
      */
-    public StorageEntry get(final GetParameter gp) throws IOException, NoSuchElementException, ContentNotFoundException;
+    public JSocialKademliaStorageEntry get(final GetParameter gp) throws IOException, NoSuchElementException, ContentNotFoundException;
 
     /**
      * Get entries for the required data from the network
@@ -67,7 +67,7 @@ public interface DataManager
      * @throws java.io.IOException
      * @throws kademlia.exceptions.ContentNotFoundException
      */
-    public StorageEntry get(final KademliaId key, final String type) throws IOException, NoSuchElementException, ContentNotFoundException;
+    public JSocialKademliaStorageEntry get(final KademliaId key, final String type) throws IOException, NoSuchElementException, ContentNotFoundException;
 
     /**
      * Get entries for the required data from the network
@@ -81,7 +81,7 @@ public interface DataManager
      * @throws java.io.IOException
      * @throws kademlia.exceptions.ContentNotFoundException
      */
-    public StorageEntry get(final KademliaId key, final String type, final String ownerId) throws IOException, NoSuchElementException, ContentNotFoundException;
+    public JSocialKademliaStorageEntry get(final KademliaId key, final String type, final String ownerId) throws IOException, NoSuchElementException, ContentNotFoundException;
 
     /**
      * Get the content and also cache it.
@@ -93,7 +93,7 @@ public interface DataManager
      * @throws java.io.IOException
      * @throws kademlia.exceptions.ContentNotFoundException
      */
-    public StorageEntry getAndCache(final GetParameter gp) throws IOException, ContentNotFoundException;
+    public JSocialKademliaStorageEntry getAndCache(final GetParameter gp) throws IOException, ContentNotFoundException;
 
     /**
      * Get the content and also cache it.
@@ -106,7 +106,7 @@ public interface DataManager
      * @throws java.io.IOException
      * @throws kademlia.exceptions.ContentNotFoundException
      */
-    public StorageEntry getAndCache(final KademliaId key, final String type) throws IOException, ContentNotFoundException;
+    public JSocialKademliaStorageEntry getAndCache(final KademliaId key, final String type) throws IOException, ContentNotFoundException;
 
     /**
      * Get the content and also cache it.
@@ -120,7 +120,7 @@ public interface DataManager
      * @throws java.io.IOException
      * @throws kademlia.exceptions.ContentNotFoundException
      */
-    public StorageEntry getAndCache(final KademliaId key, final String type, final String ownerId) throws IOException, ContentNotFoundException;
+    public JSocialKademliaStorageEntry getAndCache(final KademliaId key, final String type, final String ownerId) throws IOException, ContentNotFoundException;
 
     /**
      * Run an update call to update the data stored locally on this computer.
@@ -138,9 +138,9 @@ public interface DataManager
     public void shutdown(final boolean saveState) throws IOException;
 
     /**
-     * @return The JKademliaNode used by this DataManager
+     * @return The JSocialKademliaNode used by this DataManager
      */
-    public JKademliaNode getKademliaNode();
+    public JSocialKademliaNode getKademliaNode();
 
     /**
      * Stores the specified value under the given key locally;

@@ -4,7 +4,7 @@ import dosna.dhtAbstraction.DataManager;
 import dosna.notification.NotificationBox;
 import java.io.IOException;
 import kademlia.dht.GetParameter;
-import socialkademlia.dht.StorageEntry;
+import socialkademlia.dht.JSocialKademliaStorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 import kademlia.node.Node;
 
@@ -64,7 +64,7 @@ public class ActorManager
     {
         Actor a = new Actor(id);
         GetParameter gp = new GetParameter(a.getKey(), a.getType(), a.getId());
-        StorageEntry se = dataManager.getAndCache(gp);
+        JSocialKademliaStorageEntry se = dataManager.getAndCache(gp);
         return (Actor) new Actor().fromSerializedForm(se.getContent());
     }
 

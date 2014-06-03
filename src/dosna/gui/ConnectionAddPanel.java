@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import kademlia.dht.GetParameter;
-import socialkademlia.dht.StorageEntry;
+import socialkademlia.dht.JSocialKademliaStorageEntry;
 import kademlia.exceptions.ContentNotFoundException;
 
 /**
@@ -137,7 +137,7 @@ public class ConnectionAddPanel extends JPanel
                 GetParameter gp = new GetParameter(u.getKey(), u.getType());
 
                 /* Now lets search for content */
-                StorageEntry val = null;
+                JSocialKademliaStorageEntry val = null;
                 try
                 {
                     val = ConnectionAddPanel.this.dataManager.get(gp);
