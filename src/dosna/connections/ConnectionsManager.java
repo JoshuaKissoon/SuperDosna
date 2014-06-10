@@ -35,8 +35,10 @@ public class ConnectionsManager
      *
      * @param actor      The owner of this relationship
      * @param connection The actor to be connected to the relationship owner
+     *
+     * @return Whether the operations were successful or not
      */
-    public void addConnection(final Actor actor, final Actor connection)
+    public boolean addConnection(final Actor actor, final Actor connection)
     {
         /* Create a new relationship object and add it to the actor's profile */
         Relationship r = new Relationship(actor, connection);
@@ -46,20 +48,15 @@ public class ConnectionsManager
         try
         {
             /* Now let's update this actor object  on the DHT */
-            if (dataManager.putAndCache(actor) > 0)
-            {
-                JOptionPane.showMessageDialog(null, "You have successfully added this connection!! Congrats!");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "An error occured whiles adding this connection! Please try again later.");
-            }
+            dataManager.putAndCache(actor);
         }
         catch (IOException ex)
         {
             Logger.getLogger(ConnectionAddPanel.class.getName()).log(Level.SEVERE, "Unable to upload User object after add connection.", ex);
+            return false;
         }
-        
+
         /* Create a new messagebox between these actors */
+        return true;
     }
 }

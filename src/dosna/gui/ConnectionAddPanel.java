@@ -172,8 +172,15 @@ public class ConnectionAddPanel extends JPanel
         {
             final JButton btn = (JButton) evt.getSource();
             final Actor connection = (Actor) btn.getClientProperty("actor");
-            
-            new ConnectionsManager(dataManager).addConnection(actor, connection);
+
+            if (new ConnectionsManager(dataManager).addConnection(actor, connection))
+            {
+                JOptionPane.showMessageDialog(null, "You have successfully added this connection!! Congrats!");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "An error occured whiles adding this connection! Please try again later.");
+            }
         }
     }
 }

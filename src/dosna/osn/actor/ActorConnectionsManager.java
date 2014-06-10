@@ -20,10 +20,7 @@ import kademlia.exceptions.ContentNotFoundException;
 public class ActorConnectionsManager implements Serializable
 {
 
-    /**
-     * A set of relationships of this actor;
-     * we keep this set of relationships in sorted order.
-     */
+    /* A set of relationships of this actor; keep this set of relationships in sorted order. */
     private TreeSet<Relationship> connections;
     private transient Actor actor;
 
