@@ -1,5 +1,6 @@
 package dosna.gui;
 
+import dosna.connections.ConnectionsManager;
 import dosna.dhtAbstraction.DataManager;
 import dosna.osn.actor.Actor;
 import dosna.osn.actor.Relationship;
@@ -171,27 +172,8 @@ public class ConnectionAddPanel extends JPanel
         {
             final JButton btn = (JButton) evt.getSource();
             final Actor connection = (Actor) btn.getClientProperty("actor");
-
-            Relationship r = new Relationship(actor, connection);
-            actor.getConnectionManager().addConnection(r);
-            actor.setUpdated();
-
-            try
-            {
-                /* Now let's put this data back on the DHT */
-                if (dataManager.putAndCache(actor) > 0)
-                {
-                    JOptionPane.showMessageDialog(null, "You have successfully added this connection!! Congrats!");
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "An error occured whiles adding this connection! Please try again later.");
-                }
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(ConnectionAddPanel.class.getName()).log(Level.SEVERE, "Unable to upload User object after add connection.", ex);
-            }
+            
+            new ConnectionsManager(dataManager).addConnection(actor, connection);
         }
     }
 }
