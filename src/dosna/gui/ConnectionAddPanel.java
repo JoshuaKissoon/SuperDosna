@@ -29,7 +29,7 @@ import kademlia.exceptions.ContentNotFoundException;
  * @author Joshua Kissoon
  * @since 20140404
  *
- * @todo when a user is already your friend, don't show the addfriend button
+ * @todo when a actor is already your connection, don't show the addfriend button
  */
 public class ConnectionAddPanel extends JPanel
 {
@@ -113,7 +113,7 @@ public class ConnectionAddPanel extends JPanel
         btn.addActionListener(new ConnectionAddActionListener());
         resultsPanel.add(btn, BorderLayout.EAST);
 
-        /* Refresh to show data to user */
+        /* Refresh to show data to actor */
         this.refresh();
     }
 

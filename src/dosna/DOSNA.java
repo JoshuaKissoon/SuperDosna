@@ -71,18 +71,17 @@ public class DOSNA
     }
 
     /**
-     * Launch the user login form and handle logging in the user
+     * Launch the actor login form and handle logging in the actor
      */
     public void userLogin()
     {
-        /* Ask the user to login */
+        /* Ask the actor to login */
         final LoginFrame login = new LoginFrame();
         login.setActionListener((final ActionEvent event) ->
         {
             switch (event.getActionCommand())
             {
                 case "login":
-                    /* @todo Login the user */
                     final String username = login.getUsername();
                     final String password = login.getPassword();
 
@@ -101,12 +100,12 @@ public class DOSNA
                         }
                         else
                         {
-                            JOptionPane.showMessageDialog(null, "Sorry, no account exists for the given user.");
+                            JOptionPane.showMessageDialog(null, "Sorry, no account exists for the given credentials.");
                         }
                     }
                     break;
                 case "signup":
-                    /* The user wants to signup, get them the signup form */
+                    /* The actor wants to signup, get them the signup form */
                     login.dispose();
                     DOSNA.this.userSignup();
                     break;
@@ -117,12 +116,12 @@ public class DOSNA
     }
 
     /**
-     * Try to login a user into the system, handles the logic for logging in the user.
+     * Try to login a actor into the system, handles the logic for logging in the actor.
      *
      * @param actorId
      * @param password
      *
-     * @return Whether the user login was successful or not
+     * @return Whether the login was successful or not
      */
     public LoginResult loginUser(String actorId, String password)
     {
@@ -132,11 +131,11 @@ public class DOSNA
 
         try
         {
-            /* Checking if a user exists */
+            /* Checking if a actor's account exists */
             final GetParameter gp = new GetParameter(u.getKey(), u.getType(), actorId);
             JSocialKademliaStorageEntry items = this.dataManager.get(gp);
 
-            /* User exists! Now check if password matches */
+            /* Actor exists! Now check if password matches */
             Actor actor = (Actor) new Actor().fromSerializedForm(items.getContent());
             if (actor.isPassword(password))
             {
@@ -148,7 +147,7 @@ public class DOSNA
         }
         catch (ContentNotFoundException cnfex)
         {
-            /* The user does not exist */
+            /* The actor does not exist */
             return new LoginResult();
         }
         catch (IOException ex)
@@ -195,7 +194,7 @@ public class DOSNA
     }
 
     /**
-     * Launch the user signup form and handle signing in the user
+     * Launch the actor signup form and handle signing in the actor
      */
     public void userSignup()
     {
@@ -240,11 +239,11 @@ public class DOSNA
     }
 
     /**
-     * Try to signup a user into the system, handles the logic for signing up the user.
+     * Try to signup a actor into the system, handles the logic for signing up the actor.
      *
-     * @param actor The actor object of the user to signup
+     * @param actor The actor object of the Actor to signup
      *
-     * @return Whether the user signup was successful or not
+     * @return Whether the actor signup was successful or not
      */
     public SignupResult signupUser(final Actor actor)
     {
@@ -253,7 +252,7 @@ public class DOSNA
             /* Initialize our routing */
             DOSNA.this.initRouting(actor.getId(), actor.getKey());
 
-            /* See if this user object already exists on the network */
+            /* See if this actor object already exists on the network */
             GetParameter gp = new GetParameter(actor.getKey(), actor.getType(), actor.getId());
             dataManager.get(gp);
 
@@ -264,12 +263,12 @@ public class DOSNA
         {
             try
             {
-                /* Lets add this user to the system */
+                /* Lets add this actor to the system */
                 actor.setActorNode(this.dataManager.getKademliaNode().getNode());
                 ActorManager ac = new ActorManager(dataManager);
                 Actor createdActor = ac.createActor(actor);
 
-                /* User added, now launch DOSNA */
+                /* Actor added, now launch DOSNA */
                 return new SignupResult(createdActor, true);
             }
             catch (IOException exc)
@@ -282,9 +281,9 @@ public class DOSNA
         return new SignupResult();
     }
 
-    public SignupResult signupUser(final String userId, final String password, final String fullName)
+    public SignupResult signupUser(final String actorId, final String password, final String fullName)
     {
-        final Actor u = new Actor(userId);
+        final Actor u = new Actor(actorId);
         u.setPassword(password);
         u.setName(fullName);
 

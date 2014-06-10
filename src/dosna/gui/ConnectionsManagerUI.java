@@ -46,7 +46,7 @@ public class ConnectionsManagerUI extends JFrame
     public void display()
     {
         this.setTitle("Ananci: Manage Connections - " + this.actor.getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setMaximumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
