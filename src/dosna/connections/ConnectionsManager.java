@@ -2,12 +2,12 @@ package dosna.connections;
 
 import dosna.dhtAbstraction.DataManager;
 import dosna.gui.ConnectionAddPanel;
+import dosna.messaging.MessageBox;
 import dosna.osn.actor.Actor;
 import dosna.osn.actor.Relationship;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  * A class that takes care of various connections management operations
@@ -57,6 +57,19 @@ public class ConnectionsManager
         }
 
         /* Create a new messagebox between these actors */
+        MessageBox mb = new MessageBox(actor.getId(), connection.getId());
+
+        try
+        {
+            this.dataManager.putAndCache(mb);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(ConnectionAddPanel.class.getName()).log(Level.SEVERE, "Unable to upload newly created message box.", ex);
+            return false;
+        }
+
+        /* Everything's good if we got here! lets return true. */
         return true;
     }
 }
