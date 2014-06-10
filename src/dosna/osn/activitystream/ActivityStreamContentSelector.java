@@ -27,7 +27,7 @@ public class ActivityStreamContentSelector
      */
     public ActivityStreamContentSelector(Collection<ContentMetadata> iContentMD)
     {
-        this.contentMD = new TreeSet<>();
+        this.contentMD = new TreeSet<>(new ContentMetadataComparator());
 
         for (ContentMetadata cmd : iContentMD)
         {
