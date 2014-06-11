@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  * @author Joshua Kissoon
  * @since 20140406
  */
-public class ActivityStream extends JPanel
+public class ActivityStream extends JPanel implements DosnaActivityStream
 {
 
     /* Properties */
@@ -33,14 +33,13 @@ public class ActivityStream extends JPanel
         this.content = content;
     }
 
+    @Override
     public void setContent(final Collection<ActivityStreamContent> content)
     {
         this.content = content;
     }
 
-    /**
-     * Create the HomeStream
-     */
+    @Override
     public void create()
     {
         this.setLayout(new GridBagLayout());
@@ -59,7 +58,7 @@ public class ActivityStream extends JPanel
             this.add(hsc.getContentDisplay(), getConstraints(0, counter++));
         }
     }
-    
+
     public static GridBagConstraints getConstraints(int x, int y)
     {
         GridBagConstraints c = new GridBagConstraints();
