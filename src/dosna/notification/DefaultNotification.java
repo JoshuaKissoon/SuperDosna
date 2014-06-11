@@ -1,5 +1,7 @@
 package dosna.notification;
 
+import dosna.api.notification.Notification;
+import javax.swing.JPanel;
 import kademlia.node.KademliaId;
 
 /**
@@ -8,8 +10,10 @@ import kademlia.node.KademliaId;
  * @author Joshua
  * @since
  */
-public class JNotification
+public class DefaultNotification implements Notification
 {
+
+    private final String notificationType = "DefaultNotification";
 
     private final KademliaId key;
     private final String notification;
@@ -20,18 +24,20 @@ public class JNotification
      * @param key          The key of the content this notification is for
      * @param notification The Notification itself.
      */
-    public JNotification(KademliaId key, String notification)
+    public DefaultNotification(KademliaId key, String notification)
     {
         this.key = key;
         this.notification = notification;
     }
 
+    @Override
     public KademliaId getContentKey()
     {
         return this.key;
     }
 
-    public String getNotification()
+    @Override
+    public String getNotificationMessage()
     {
         return this.notification;
     }
@@ -46,5 +52,17 @@ public class JNotification
         sb.append("]");
 
         return sb.toString();
+    }
+
+    @Override
+    public JPanel getNotificationDisplay()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getType()
+    {
+        return this.notificationType;
     }
 }

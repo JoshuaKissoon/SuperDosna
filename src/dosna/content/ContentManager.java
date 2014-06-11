@@ -1,7 +1,7 @@
 package dosna.content;
 
 import dosna.dhtAbstraction.DataManager;
-import dosna.notification.JNotification;
+import dosna.notification.DefaultNotification;
 import dosna.notification.NotificationBox;
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +34,7 @@ public class ContentManager
      *
      * When a content is to be updated:
  - The updated content is placed on the DHT.
- - A notification is added to the JNotification box of all of it's associated actors
+ - A notification is added to the DefaultNotification box of all of it's associated actors
  -- All of these notification boxes are updated onto the DHT.
      *
      * @param content The updated content to be placed.
@@ -50,7 +50,7 @@ public class ContentManager
             List<String> associatedUsers = content.getRelatedActors();
             for (String actorId : associatedUsers)
             {
-                /* Lets construct a temporary JNotification Box for this actor since the key will be generated */
+                /* Lets construct a temporary DefaultNotification Box for this actor since the key will be generated */
                 NotificationBox temp = new NotificationBox(actorId);
 
                 try
@@ -60,7 +60,7 @@ public class ContentManager
                     NotificationBox original = (NotificationBox) new NotificationBox().fromSerializedForm(e.getContent());
 
                     /* Add the updated notification box */
-                    original.addNotification(new JNotification(content.getKey(), "Content has been modified"));
+                    original.addNotification(new DefaultNotification(content.getKey(), "Content has been modified"));
 
                     /* Push the notification box back onto the network */
                     dataManager.put(original);

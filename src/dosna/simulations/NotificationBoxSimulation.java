@@ -1,6 +1,6 @@
 package dosna.simulations;
 
-import dosna.notification.JNotification;
+import dosna.notification.DefaultNotification;
 import dosna.notification.NotificationBox;
 import java.io.IOException;
 import socialkademlia.JSocialKademliaNode;
@@ -28,7 +28,7 @@ public class NotificationBoxSimulation
             kad.bootstrap(kad2.getNode());
 
             NotificationBox nb = new NotificationBox("Joshua");
-            nb.addNotification(new JNotification(new KademliaId(), "Some Notification 1"));
+            nb.addNotification(new DefaultNotification(new KademliaId(), "Some Notification 1"));
 
             /* Put the notification box */
             kad.put(nb);
@@ -43,7 +43,7 @@ public class NotificationBoxSimulation
             System.out.println("\n\n\n\n************* Adding new Notification ********************* ");
 
             /* Add a notification and put the box back on the DHT */
-            nb2.addNotification(new JNotification(new KademliaId(), "Some Notification 2"));
+            nb2.addNotification(new DefaultNotification(new KademliaId(), "Some Notification 2"));
             kad.put(nb2);
             System.out.println(nb2);
 
