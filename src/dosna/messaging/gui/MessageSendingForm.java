@@ -47,8 +47,8 @@ public final class MessageSendingForm extends JPanel
         this.add(scrollPane, BorderLayout.CENTER);
 
         /* Submit button */
-        submitBtn = new JButton("Post");
-        submitBtn.setActionCommand("postStatus");
+        submitBtn = new JButton("Send");
+        submitBtn.setActionCommand("sendMsg");
         this.add(submitBtn, BorderLayout.EAST);
 
         /* Set some form properties */

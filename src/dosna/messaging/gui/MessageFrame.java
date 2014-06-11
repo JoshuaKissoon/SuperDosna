@@ -49,13 +49,13 @@ public final class MessageFrame extends JFrame implements Runnable
     /**
      * Create the GUI and it's contents
      */
-    public void create()
+    public final void create()
     {
-        this.setLayout(new BorderLayout());
+        this.getContentPane().setLayout(new BorderLayout());
 
-        this.add(this.getContactsList(), BorderLayout.WEST);
+        this.getContentPane().add(this.getContactsList(), BorderLayout.WEST);
 
-        this.add(this.getMessagesPanel(), BorderLayout.CENTER);
+        this.getContentPane().add(this.getMessagesPanel(), BorderLayout.CENTER);
     }
 
     /**
@@ -63,9 +63,11 @@ public final class MessageFrame extends JFrame implements Runnable
      *
      * @param connectionAid The ActorId of the connection
      */
-    public void updateMessagesPanel(final String connectionAid)
+    public final void updateMessagesPanel(final String connectionAid)
     {
-        this.add(this.getMessagesPanel(connectionAid), BorderLayout.CENTER);
+        this.getContentPane().remove(this.messagesPanel);
+        this.getContentPane().add(this.getMessagesPanel(connectionAid), BorderLayout.CENTER);
+        this.refresh();
     }
 
     /**
@@ -113,11 +115,11 @@ public final class MessageFrame extends JFrame implements Runnable
     private JPanel getMessagesPanel(final String connectionAid)
     {
         /* Setup the panel */
-        messagesPanel = new JPanel();
+        messagesPanel = new JPanel(new BorderLayout());
 
         try
         {
-            MessageBox mb = new MessagingManager(dosnaObjects).loadMessageBox(connectionAid);
+            MessageBox mb = new MessagingManager(this.dosnaObjects).loadMessageBox(connectionAid);
             System.out.println(mb);
         }
         catch (ContentNotFoundException ex)
@@ -125,13 +127,17 @@ public final class MessageFrame extends JFrame implements Runnable
 
         }
 
+        /* Add the message add form */
+        MessageSendingForm msf = new MessageSendingForm(this.dosnaObjects, connectionAid);
+        messagesPanel.add(msf, BorderLayout.PAGE_END);
+
         return messagesPanel;
     }
 
     /**
      * Displays the GUI onto the screen
      */
-    public void display()
+    public final void display()
     {
         this.setTitle("Messenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -140,6 +146,16 @@ public final class MessageFrame extends JFrame implements Runnable
         this.setLocationRelativeTo(null);
         this.pack();
         this.setVisible(true);
+    }
+
+    /**
+     * Refresh the content on the GUI
+     */
+    public final void refresh()
+    {
+        this.invalidate();
+        this.validate();
+        this.repaint();
     }
 
     /**
