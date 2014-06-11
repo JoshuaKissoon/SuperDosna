@@ -1,9 +1,8 @@
 package dosna.gui;
 
+import dosna.DosnaObjects;
 import dosna.osn.status.StatusAddForm;
-import dosna.dhtAbstraction.DataManager;
 import dosna.messaging.gui.MessagesMenuItem;
-import dosna.osn.actor.Actor;
 import dosna.osn.activitystream.ActivityStream;
 import dosna.osn.activitystream.ActivityStreamManager;
 import java.awt.BorderLayout;
@@ -39,8 +38,7 @@ public final class AnanciUI extends JFrame
     private final static int FRAME_WIDTH = 1200;
     private final static int FRAME_HEIGHT = 800;
 
-    private final DataManager dataManager;
-    private final Actor actor;
+    private final DosnaObjects dosnaObjects;
 
     /* Components */
     private JSplitPane splitPane;
@@ -54,13 +52,11 @@ public final class AnanciUI extends JFrame
     /**
      * Initialize the UI Class
      *
-     * @param mngr  The DataManager used to read and store data
-     * @param actor Actor currently logged in
+     * @param dosnaObjects The set of dosna objects
      */
-    public AnanciUI(final DataManager mngr, final Actor actor)
+    public AnanciUI(final DosnaObjects dosnaObjects)
     {
-        this.dataManager = mngr;
-        this.actor = actor;
+        this.dosnaObjects = dosnaObjects;
         this.actionListener = new AnanciUIActionListener();
     }
 
@@ -82,7 +78,7 @@ public final class AnanciUI extends JFrame
 
         /* Status Add Form */
         final StatusAddForm saf = new StatusAddForm();
-        saf.setActionListener(new StatusAddForm.SAFActionListener(actor, saf));
+        saf.setActionListener(new StatusAddForm.SAFActionListener(dosnaObjects.getActor(), saf));
         leftSection.add(saf, BorderLayout.NORTH);
 
         /**
@@ -114,7 +110,7 @@ public final class AnanciUI extends JFrame
                     @Override
                     public void run()
                     {
-                        ActivityStreamManager hsm = new ActivityStreamManager(actor, dataManager);
+                        ActivityStreamManager hsm = new ActivityStreamManager(dosnaObjects.getActor(), dosnaObjects.getDataManager());
                         ActivityStream hs = hsm.createHomeStream();
                         homeStream.removeAll();
                         homeStream.add(hs, BorderLayout.CENTER);
@@ -154,8 +150,8 @@ public final class AnanciUI extends JFrame
         menuItem.addActionListener(this.actionListener);
         menuItem.setActionCommand(AnanciUIActionListener.AC_ADD_CONNECTION);
         menu.add(menuItem);
-        
-        MessagesMenuItem mmi = new MessagesMenuItem();
+
+        MessagesMenuItem mmi = new MessagesMenuItem(this.dosnaObjects);
         menu.add(mmi.getMenuItem());
 
         /* Setting up the Help menu */
@@ -184,7 +180,7 @@ public final class AnanciUI extends JFrame
      */
     public void display()
     {
-        this.setTitle("Ananci - " + this.actor.getName());
+        this.setTitle("Ananci - " + this.dosnaObjects.getActor().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -225,13 +221,13 @@ public final class AnanciUI extends JFrame
             {
                 case AC_MANAGE_CONNECTIONS:
                     /* Load the Connections Manager UI */
-                    ConnectionsManagerUI cmui = new ConnectionsManagerUI(actor, dataManager);
+                    ConnectionsManagerUI cmui = new ConnectionsManagerUI(dosnaObjects.getActor(), dosnaObjects.getDataManager());
                     cmui.create();
                     cmui.display();
                     break;
                 case AC_ADD_CONNECTION:
                     /* Load the Connections Add Form */
-                    ConnectionAddForm caf = new ConnectionAddForm(actor, dataManager);
+                    ConnectionAddForm caf = new ConnectionAddForm(dosnaObjects.getActor(), dosnaObjects.getDataManager());
                     caf.create();
                     caf.display();
                     break;
@@ -241,7 +237,7 @@ public final class AnanciUI extends JFrame
 
                     break;
                 case AC_HELP_PRINT_ACTOR:
-                    System.out.println("\n" + AnanciUI.this.actor + "\n");
+                    System.out.println("\n" + AnanciUI.this.dosnaObjects.getActor() + "\n");
                     break;
                 case AC_HELP_PRINT_ROUTING_TABLE:
                     break;
@@ -261,7 +257,7 @@ public final class AnanciUI extends JFrame
             /* Save the state before closing */
             try
             {
-                AnanciUI.this.dataManager.shutdown(true);
+                AnanciUI.this.dosnaObjects.getDataManager().shutdown(true);
             }
             catch (IOException ex)
             {
