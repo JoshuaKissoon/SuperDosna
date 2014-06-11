@@ -2,6 +2,7 @@ package dosna.gui;
 
 import dosna.osn.status.StatusAddForm;
 import dosna.dhtAbstraction.DataManager;
+import dosna.messaging.gui.MessagesMenuItem;
 import dosna.osn.actor.Actor;
 import dosna.osn.activitystream.ActivityStream;
 import dosna.osn.activitystream.ActivityStreamManager;
@@ -153,6 +154,9 @@ public final class AnanciUI extends JFrame
         menuItem.addActionListener(this.actionListener);
         menuItem.setActionCommand(AnanciUIActionListener.AC_ADD_CONNECTION);
         menu.add(menuItem);
+        
+        MessagesMenuItem mmi = new MessagesMenuItem();
+        menu.add(mmi.getMenuItem());
 
         /* Setting up the Help menu */
         menu = new JMenu("Help");
