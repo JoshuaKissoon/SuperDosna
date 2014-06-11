@@ -1,14 +1,18 @@
 package dosna.messaging.gui;
 
 import dosna.DosnaObjects;
+import dosna.gui.util.GBConstraints;
+import dosna.messaging.Message;
 import dosna.messaging.MessageBox;
 import dosna.messaging.MessagingManager;
 import dosna.osn.actor.Relationship;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.util.Collection;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,8 +35,8 @@ public final class MessageFrame extends JFrame implements Runnable
     /* Panel to show a list of contacts */
     private JList contactsList;
 
-    /* Panel to show the messages from a single contact */
-    private JPanel messagesPanel;
+    /* Panel to show the data for a single contact */
+    private JPanel contactPanel;
 
     private final DosnaObjects dosnaObjects;
 
@@ -55,7 +59,7 @@ public final class MessageFrame extends JFrame implements Runnable
 
         this.getContentPane().add(this.getContactsList(), BorderLayout.WEST);
 
-        this.getContentPane().add(this.getMessagesPanel(), BorderLayout.CENTER);
+        this.getContentPane().add(this.getContactPanel(), BorderLayout.CENTER);
     }
 
     /**
@@ -63,10 +67,10 @@ public final class MessageFrame extends JFrame implements Runnable
      *
      * @param connectionAid The ActorId of the connection
      */
-    public final void updateMessagesPanel(final String connectionAid)
+    public final void updateContactPanel(final String connectionAid)
     {
-        this.getContentPane().remove(this.messagesPanel);
-        this.getContentPane().add(this.getMessagesPanel(connectionAid), BorderLayout.CENTER);
+        this.getContentPane().remove(this.contactPanel);
+        this.getContentPane().add(this.getContactPanel(connectionAid), BorderLayout.CENTER);
         this.refresh();
     }
 
@@ -97,29 +101,42 @@ public final class MessageFrame extends JFrame implements Runnable
     }
 
     /**
-     * Here we setup and load the messages panel
+     * Here we setup and load the contact panel
      *
-     * We load a blank messages panel in this scenario
+     * We load a blank panel in this scenario
      */
-    private JPanel getMessagesPanel()
+    private JPanel getContactPanel()
     {
         /* Setup the panel */
-        messagesPanel = new JPanel();
+        contactPanel = new JPanel();
 
-        return messagesPanel;
+        return contactPanel;
     }
 
     /**
-     * Get the messages panel with messages from a specific connection
+     * Get the contact panel with
+     * - Messages from a specific connection
+     * - A message sending form
      */
-    private JPanel getMessagesPanel(final String connectionAid)
+    private JPanel getContactPanel(final String connectionAid)
     {
         /* Setup the panel */
-        messagesPanel = new JPanel(new BorderLayout());
+        contactPanel = new JPanel(new BorderLayout());
+
+        /* Setup a panel for messages and load the messages */
+        final JPanel messagesPanel = new JPanel(new GridBagLayout());
 
         try
         {
             MessageBox mb = new MessagingManager(this.dosnaObjects).loadMessageBox(connectionAid);
+
+            int counter = 0;
+            for (Message m : mb.getMessages())
+            {
+                JLabel msgLbl = new JLabel(m.getText());
+                messagesPanel.add(msgLbl, GBConstraints.getItemConstraints(0, counter++));
+            }
+
             System.out.println(mb);
         }
         catch (ContentNotFoundException ex)
@@ -127,11 +144,14 @@ public final class MessageFrame extends JFrame implements Runnable
 
         }
 
+        /* Add the messages panel to the contact panel */
+        contactPanel.add(messagesPanel, BorderLayout.CENTER);
+
         /* Add the message add form */
         MessageSendingForm msf = new MessageSendingForm(this.dosnaObjects, connectionAid);
-        messagesPanel.add(msf, BorderLayout.PAGE_END);
+        contactPanel.add(msf, BorderLayout.PAGE_END);
 
-        return messagesPanel;
+        return contactPanel;
     }
 
     /**
@@ -177,7 +197,7 @@ public final class MessageFrame extends JFrame implements Runnable
             if (e.getValueIsAdjusting())
             {
                 System.out.println(contactsList.getSelectedValue());
-                MessageFrame.this.updateMessagesPanel((String) contactsList.getSelectedValue());
+                MessageFrame.this.updateContactPanel((String) contactsList.getSelectedValue());
             }
         }
 
