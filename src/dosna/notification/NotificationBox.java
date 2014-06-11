@@ -19,7 +19,7 @@ public class NotificationBox extends DOSNAContent
 
     public final static String TYPE = "NotificationBox";
 
-    private List<Notification> notifications;
+    private List<JNotification> notifications;
     private String ownerId;
 
     private KademliaId key;
@@ -35,7 +35,7 @@ public class NotificationBox extends DOSNAContent
     }
 
     /**
-     * Setup the Notification Box
+     * Setup the JNotification Box
      *
      * @param owner The owner of this notification box
      */
@@ -45,7 +45,7 @@ public class NotificationBox extends DOSNAContent
     }
 
     /**
-     * Setup the Notification Box
+     * Setup the JNotification Box
      *
      * @param ownerId The ID of the owner of this notification box
      */
@@ -75,7 +75,7 @@ public class NotificationBox extends DOSNAContent
      *
      * @param n the notification to add
      */
-    public void addNotification(Notification n)
+    public void addNotification(JNotification n)
     {
         this.notifications.add(n);
         this.setUpdated();
@@ -84,7 +84,7 @@ public class NotificationBox extends DOSNAContent
     /**
      * @return All notifications in this notifications box
      */
-    public List<Notification> getNotifications()
+    public List<JNotification> getNotifications()
     {
         return this.notifications;
     }
@@ -135,7 +135,7 @@ public class NotificationBox extends DOSNAContent
         sb.append(ownerId);
         sb.append("");
 
-        for (Notification n : this.notifications)
+        for (JNotification n : this.notifications)
         {
             sb.append(n);
             sb.append(" ; ");

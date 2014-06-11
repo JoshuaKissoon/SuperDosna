@@ -8,7 +8,7 @@ import kademlia.node.KademliaId;
  * @author Joshua
  * @since
  */
-public class Notification
+public class JNotification
 {
 
     private final KademliaId key;
@@ -20,7 +20,7 @@ public class Notification
      * @param key          The key of the content this notification is for
      * @param notification The Notification itself.
      */
-    public Notification(KademliaId key, String notification)
+    public JNotification(KademliaId key, String notification)
     {
         this.key = key;
         this.notification = notification;
