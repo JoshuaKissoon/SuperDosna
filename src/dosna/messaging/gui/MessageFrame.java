@@ -1,5 +1,6 @@
 package dosna.messaging.gui;
 
+import dosna.DosnaObjects;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,9 +20,16 @@ public final class MessageFrame extends JFrame implements Runnable
     /* Panel to show the messages from a single contact */
     private JPanel messagesPanel;
 
-    public MessageFrame()
-    {
+    private final DosnaObjects dosnaObjects;
 
+    /**
+     * Setup a new messenger frame
+     *
+     * @param dosnaObjects The set of DOSNA objects
+     */
+    public MessageFrame(final DosnaObjects dosnaObjects)
+    {
+        this.dosnaObjects = dosnaObjects;
     }
 
     /**
