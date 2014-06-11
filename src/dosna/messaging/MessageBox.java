@@ -13,7 +13,7 @@ import kademlia.node.KademliaId;
  * @author Joshua Kissoon
  * @since 20140610
  */
-public class MessageBox extends DOSNAContent
+public final class MessageBox extends DOSNAContent
 {
 
     public final static String TYPE = "MessageBox";
@@ -40,13 +40,18 @@ public class MessageBox extends DOSNAContent
 
         this.messages = new TreeSet<>();
 
+        /*@todo remove this since it's testing code */
+        this.addMessage(new Message("Some basic text", ownerId, contactId));
+        this.addMessage(new Message("Some basic text 2", ownerId, contactId));
+        this.addMessage(new Message("Some basic text 3", ownerId, contactId));
+
         this.generateKey();
     }
 
     /**
      * Generate the MessageBox KademliaId based on the Actors' IDs
      */
-    private void generateKey()
+    private final void generateKey()
     {
         /* Concatenate the actor IDs */
         String raw = ownerId + contactId;
@@ -70,7 +75,7 @@ public class MessageBox extends DOSNAContent
      *
      * @param m The new message to add
      */
-    public void addMessage(Message m)
+    public final void addMessage(Message m)
     {
         this.messages.add(m);
     }
@@ -78,27 +83,48 @@ public class MessageBox extends DOSNAContent
     /**
      * @return A Collection of all the messages in this MessageBox
      */
-    public Collection<Message> getMessages()
+    public final Collection<Message> getMessages()
     {
         return this.messages;
     }
 
     @Override
-    public KademliaId getKey()
+    public final KademliaId getKey()
     {
         return this.key;
     }
 
     @Override
-    public String getType()
+    public final String getType()
     {
         return TYPE;
     }
 
     @Override
-    public String getOwnerId()
+    public final String getOwnerId()
     {
         return this.ownerId;
     }
 
+    @Override
+    public final String toString()
+    {
+        StringBuilder sb = new StringBuilder("[MessageBox: ");
+
+        sb.append("Owner: ");
+        sb.append(this.getOwnerId());
+        sb.append(", ");
+
+        sb.append("Connection: ");
+        sb.append(this.contactId);
+        sb.append(", ");
+
+        sb.append("Num Messages: ");
+        sb.append(this.messages.size());
+        sb.append(", ");
+
+        sb.append("]");
+
+        return sb.toString();
+    }
 }

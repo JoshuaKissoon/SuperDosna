@@ -1,6 +1,8 @@
 package dosna.messaging.gui;
 
 import dosna.DosnaObjects;
+import dosna.messaging.MessageBox;
+import dosna.messaging.MessagingManager;
 import dosna.osn.actor.Relationship;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import kademlia.exceptions.ContentNotFoundException;
 
 /**
  * This frame shows all messages provides the messaging facility
@@ -112,8 +115,16 @@ public final class MessageFrame extends JFrame implements Runnable
         /* Setup the panel */
         messagesPanel = new JPanel();
 
-        
-        
+        try
+        {
+            MessageBox mb = new MessagingManager(dosnaObjects).loadMessageBox(connectionAid);
+            System.out.println(mb);
+        }
+        catch (ContentNotFoundException ex)
+        {
+
+        }
+
         return messagesPanel;
     }
 
@@ -150,6 +161,7 @@ public final class MessageFrame extends JFrame implements Runnable
             if (e.getValueIsAdjusting())
             {
                 System.out.println(contactsList.getSelectedValue());
+                MessageFrame.this.updateMessagesPanel((String) contactsList.getSelectedValue());
             }
         }
 
