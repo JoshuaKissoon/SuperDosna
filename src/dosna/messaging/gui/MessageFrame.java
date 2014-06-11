@@ -56,6 +56,16 @@ public final class MessageFrame extends JFrame implements Runnable
     }
 
     /**
+     * Update the messages panel showing messages from a specific connection
+     *
+     * @param connectionAid The ActorId of the connection
+     */
+    public void updateMessagesPanel(final String connectionAid)
+    {
+        this.add(this.getMessagesPanel(connectionAid), BorderLayout.CENTER);
+    }
+
+    /**
      * Here we setup and load the contacts
      */
     private JList getContactsList()
@@ -88,9 +98,22 @@ public final class MessageFrame extends JFrame implements Runnable
      */
     private JPanel getMessagesPanel()
     {
-        /* Setup the contacts panel */
+        /* Setup the panel */
         messagesPanel = new JPanel();
 
+        return messagesPanel;
+    }
+
+    /**
+     * Get the messages panel with messages from a specific connection
+     */
+    private JPanel getMessagesPanel(final String connectionAid)
+    {
+        /* Setup the panel */
+        messagesPanel = new JPanel();
+
+        
+        
         return messagesPanel;
     }
 
