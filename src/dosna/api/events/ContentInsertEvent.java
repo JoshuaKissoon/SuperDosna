@@ -3,7 +3,7 @@ package dosna.api.events;
 import dosna.content.DOSNAContent;
 
 /**
- * Interface for the Event that occurs when a content is being inserted into the DHT
+ * Interface for the Event that occurs when a new content is being inserted into the DHT
  *
  * @author Joshua Kissoon
  * @since 20140611
