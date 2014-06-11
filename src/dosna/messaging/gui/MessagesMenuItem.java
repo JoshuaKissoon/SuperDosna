@@ -39,6 +39,7 @@ public class MessagesMenuItem implements DosnaMenuItem
             if(e.getActionCommand().equals(COMMAND))
             {
                 /* The messaging menu item was clicked, handle popping up the Messages interface here!! */
+                new Thread(new MessageFrame()).start();
             }
         }
     }
