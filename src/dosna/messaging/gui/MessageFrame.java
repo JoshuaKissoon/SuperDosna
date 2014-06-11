@@ -1,9 +1,17 @@
 package dosna.messaging.gui;
 
 import dosna.DosnaObjects;
+import dosna.osn.actor.Relationship;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Collection;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * This frame shows all messages provides the messaging facility
@@ -14,8 +22,11 @@ import javax.swing.JPanel;
 public final class MessageFrame extends JFrame implements Runnable
 {
 
+    /* Frame properties */
+    private final int width = 1000, height = 500;
+
     /* Panel to show a list of contacts */
-    private JPanel contactsPanel;
+    private JList contactsList;
 
     /* Panel to show the messages from a single contact */
     private JPanel messagesPanel;
@@ -37,7 +48,50 @@ public final class MessageFrame extends JFrame implements Runnable
      */
     public void create()
     {
+        this.setLayout(new BorderLayout());
 
+        this.add(this.getContactsList(), BorderLayout.WEST);
+
+        this.add(this.getMessagesPanel(), BorderLayout.CENTER);
+    }
+
+    /**
+     * Here we setup and load the contacts
+     */
+    private JList getContactsList()
+    {
+        /* Setup the contacts list model */
+        DefaultListModel listModel = new DefaultListModel();
+
+        Collection<Relationship> connections = this.dosnaObjects.getActor().getConnectionManager().getRelationships();
+
+        for (Relationship r : connections)
+        {
+            listModel.addElement(r.getConnectionUid());
+        }
+
+        /* Setup the list and scroll pane */
+        contactsList = new JList(listModel);
+        contactsList.addListSelectionListener(new ContactsListListener());
+
+        JScrollPane scp = new JScrollPane(contactsList);
+        scp.setSize(new Dimension(300, this.height));
+        scp.setMinimumSize(new Dimension(300, this.height));
+
+        return contactsList;
+    }
+
+    /**
+     * Here we setup and load the messages panel
+     *
+     * We load a blank messages panel in this scenario
+     */
+    private JPanel getMessagesPanel()
+    {
+        /* Setup the contacts panel */
+        messagesPanel = new JPanel();
+
+        return messagesPanel;
     }
 
     /**
@@ -47,8 +101,8 @@ public final class MessageFrame extends JFrame implements Runnable
     {
         this.setTitle("Messenger");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(new Dimension(1000, 500));
-        this.setMinimumSize(new Dimension(1000, 500));
+        this.setSize(new Dimension(this.width, this.height));
+        this.setMinimumSize(new Dimension(this.width, this.height));
         this.setLocationRelativeTo(null);
         this.pack();
         this.setVisible(true);
@@ -62,6 +116,20 @@ public final class MessageFrame extends JFrame implements Runnable
     {
         this.create();
         this.display();
+    }
+
+    private final class ContactsListListener implements ListSelectionListener
+    {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e)
+        {
+            if (e.getValueIsAdjusting())
+            {
+                System.out.println(contactsList.getSelectedValue());
+            }
+        }
+
     }
 
 }
