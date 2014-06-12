@@ -4,7 +4,9 @@ import dosna.content.DOSNAContent;
 import dosna.osn.actor.Actor;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.TreeSet;
 import kademlia.node.KademliaId;
 import kademlia.util.HashCalculator;
 
@@ -19,14 +21,14 @@ public class NotificationBox extends DOSNAContent
 
     public final static String TYPE = "NotificationBox";
 
-    private List<DefaultNotification> notifications;
+    private TreeSet<DefaultNotification> notifications;
     private String ownerId;
 
     private KademliaId key;
 
     
     {
-        notifications = new ArrayList<>();
+        notifications = new TreeSet<>();
     }
 
     public NotificationBox()
@@ -84,7 +86,7 @@ public class NotificationBox extends DOSNAContent
     /**
      * @return All notifications in this notifications box
      */
-    public List<DefaultNotification> getNotifications()
+    public Collection<DefaultNotification> getNotifications()
     {
         return this.notifications;
     }
@@ -94,7 +96,7 @@ public class NotificationBox extends DOSNAContent
      */
     public void emptyBox()
     {
-        this.notifications = new ArrayList<>();
+        this.notifications = new TreeSet<>();
         this.setUpdated();
     }
 

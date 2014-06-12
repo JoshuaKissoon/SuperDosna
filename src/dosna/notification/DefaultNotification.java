@@ -10,13 +10,15 @@ import kademlia.node.KademliaId;
  * @author Joshua
  * @since
  */
-public class DefaultNotification implements Notification
+public class DefaultNotification implements Notification, Comparable<DefaultNotification>
 {
 
     private final String notificationType = "DefaultNotification";
 
     private final KademliaId key;
     private final String notification;
+
+    private final long createdTimestamp;
 
     /**
      * Create a new notification
@@ -28,6 +30,7 @@ public class DefaultNotification implements Notification
     {
         this.key = key;
         this.notification = notification;
+        this.createdTimestamp = System.currentTimeMillis() / 1000L;
     }
 
     @Override
@@ -64,5 +67,21 @@ public class DefaultNotification implements Notification
     public String getType()
     {
         return this.notificationType;
+    }
+
+    public long getCreatedTimestamp()
+    {
+        return this.createdTimestamp;
+    }
+
+    @Override
+    public int compareTo(DefaultNotification o)
+    {
+        if (o == this)
+        {
+            return 0;
+        }
+
+        return (this.getCreatedTimestamp() > o.getCreatedTimestamp()) ? 1 : -1;
     }
 }
