@@ -25,7 +25,7 @@ public class SystemObjectsManager
     /* Instance of Notifications Manager */
     private NotificationsManager notificationsManager = null;
 
-    private PeriodicNotificationsChecker notificationsChecker;
+    private PeriodicNotificationsChecker notificationsChecker = null;
 
     /**
      * Create a new instance of the class
@@ -86,6 +86,15 @@ public class SystemObjectsManager
     {
         notificationsChecker = new PeriodicNotificationsChecker(this.dataManager, this.actor);
         notificationsChecker.startTimer();
+    }
+
+    public PeriodicNotificationsChecker getNotificationsChecker()
+    {
+        if(this.notificationsChecker == null)
+        {
+            System.err.println("Notifications checker not initialized");
+        }
+        return this.notificationsChecker;
     }
 
     /**
