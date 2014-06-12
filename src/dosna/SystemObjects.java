@@ -4,6 +4,7 @@ import dosna.api.notification.NotificationsManager;
 import dosna.dhtAbstraction.DataManager;
 import dosna.messaging.MessagingManager;
 import dosna.osn.actor.Actor;
+import java.io.IOException;
 
 /**
  * Class that contain all the DOSNA Objects that allow functionality throughout the system
@@ -23,6 +24,8 @@ public class SystemObjects
 
     /* Instance of Notifications Manager */
     private NotificationsManager notificationsManager = null;
+
+    private PeriodicNotificationsChecker notificationsChecker;
 
     /**
      * Create a new instance of the class
@@ -74,5 +77,27 @@ public class SystemObjects
         }
 
         return this.notificationsManager;
+    }
+
+    /**
+     * Launch the notification checker
+     */
+    public void launchNotificationsChecker()
+    {
+        notificationsChecker = new PeriodicNotificationsChecker(this.dataManager, this.actor);
+        notificationsChecker.startTimer();
+    }
+
+    /**
+     * Shuts down the core components of dosna
+     *
+     * @param saveState
+     *
+     * @throws java.io.IOException
+     */
+    public void shutDown(final boolean saveState) throws IOException
+    {
+        this.dataManager.shutdown(saveState);
+        this.notificationsChecker.shutdown();
     }
 }

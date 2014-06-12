@@ -340,23 +340,17 @@ public class DOSNA
         mainUi.display();
 
         /* Lets also launch the notifications checker */
-        this.launchNotificationChecker(actor);
-    }
-
-    /**
-     * Launch the notification checker
-     *
-     * @param actor
-     */
-    public void launchNotificationChecker(final Actor actor)
-    {
-        notificationsChecker = new PeriodicNotificationsChecker(this.dataManager, actor);
-        notificationsChecker.startTimer();
+        this.systemObjects.launchNotificationsChecker();
     }
 
     public DataManager getDataManager()
     {
         return this.dataManager;
+    }
+    
+    public SystemObjects getSystemObjects()
+    {
+        return this.systemObjects;
     }
 
     /**
@@ -368,8 +362,7 @@ public class DOSNA
      */
     public void shutdown(boolean saveState) throws IOException
     {
-        this.dataManager.shutdown(saveState);
-        this.notificationsChecker.shutdown();
+        this.systemObjects.shutDown(saveState);
     }
 
     /**
