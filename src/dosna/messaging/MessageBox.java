@@ -51,7 +51,7 @@ public final class MessageBox extends DOSNAContent
     /**
      * Generate the MessageBox KademliaId based on the Actors' IDs
      */
-    private final void generateKey()
+    private void generateKey()
     {
         /* Concatenate the actor IDs */
         String raw = ownerId + contactId;
@@ -75,9 +75,10 @@ public final class MessageBox extends DOSNAContent
      *
      * @param m The new message to add
      */
-    public final void addMessage(Message m)
+    public final void addMessage(final Message m)
     {
         this.messages.add(m);
+        this.setUpdated();
     }
 
     /**
