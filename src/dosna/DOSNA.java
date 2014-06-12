@@ -335,19 +335,21 @@ public class DOSNA
         /* Lets set the data manager for this actor's content manager */
         actor.init(this.dataManager);
         this.systemObjects = new SystemObjectsManager(dataManager, actor);
+
+        /* Lets launch the notifications checker */
+        this.systemObjects.launchNotificationsChecker();
+
+        /* Create and launch the main UI */
         AnanciUI mainUi = new AnanciUI(this.systemObjects);
         mainUi.create();
         mainUi.display();
-
-        /* Lets also launch the notifications checker */
-        this.systemObjects.launchNotificationsChecker();
     }
 
     public DataManager getDataManager()
     {
         return this.dataManager;
     }
-    
+
     public SystemObjectsManager getSystemObjects()
     {
         return this.systemObjects;
