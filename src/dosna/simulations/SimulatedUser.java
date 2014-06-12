@@ -85,7 +85,6 @@ public class SimulatedUser
         {
             this.actor = res.loggedInActor;
             this.actor.init(this.dosna.getDataManager());
-            this.dosna.launchNotificationChecker(this.actor);
         }
 
         return res.isLoginSuccessful;

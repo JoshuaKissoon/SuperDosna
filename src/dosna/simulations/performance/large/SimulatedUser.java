@@ -104,7 +104,6 @@ public class SimulatedUser
         {
             this.actor = res.actor;
             this.actor.init(this.dosna.getDataManager());
-            this.dosna.launchNotificationChecker(this.actor);
             this.isOnline = true;
         }
 
@@ -121,7 +120,6 @@ public class SimulatedUser
         {
             this.actor = res.loggedInActor;
             this.actor.init(this.dosna.getDataManager());
-            this.dosna.launchNotificationChecker(this.actor);
             this.isOnline = true;
         }
 
