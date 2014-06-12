@@ -1,5 +1,6 @@
 package dosna.gui;
 
+import dosna.DosnaObjects;
 import dosna.dhtAbstraction.DataManager;
 import dosna.osn.actor.Actor;
 import java.awt.Dimension;
@@ -18,19 +19,16 @@ public class ConnectionAddForm extends JFrame
     private final static int FRAME_WIDTH = 450;
     private final static int FRAME_HEIGHT = 250;
 
-    private final Actor actor;
-    private final DataManager dataManager;
+    private final DosnaObjects systemObjects;
 
     /**
      * Setup the add connection form
      *
-     * @param actor       Currently logged in Actor
-     * @param dataManager Used to put and get data
+     * @param systemObjects Used to put and get data
      */
-    public ConnectionAddForm(final Actor actor, final DataManager dataManager)
+    public ConnectionAddForm(final DosnaObjects systemObjects)
     {
-        this.actor = actor;
-        this.dataManager = dataManager;
+        this.systemObjects = systemObjects;
     }
 
     /**
@@ -38,7 +36,7 @@ public class ConnectionAddForm extends JFrame
      */
     public void create()
     {
-        this.getContentPane().add(new ConnectionAddPanel(this.actor, this.dataManager));
+        this.getContentPane().add(new ConnectionAddPanel(this.systemObjects));
     }
 
     /**
@@ -46,7 +44,7 @@ public class ConnectionAddForm extends JFrame
      */
     public void display()
     {
-        this.setTitle("Ananci: Add Connection - " + this.actor.getName());
+        this.setTitle("Ananci: Add Connection - " + this.systemObjects.getActor().getName());
 
         this.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));

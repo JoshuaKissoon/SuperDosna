@@ -38,7 +38,7 @@ public final class AnanciUI extends JFrame
     private final static int FRAME_WIDTH = 1200;
     private final static int FRAME_HEIGHT = 800;
 
-    private final DosnaObjects dosnaObjects;
+    private final DosnaObjects systemObjects;
 
     /* Components */
     private JSplitPane splitPane;
@@ -56,7 +56,7 @@ public final class AnanciUI extends JFrame
      */
     public AnanciUI(final DosnaObjects dosnaObjects)
     {
-        this.dosnaObjects = dosnaObjects;
+        this.systemObjects = dosnaObjects;
         this.actionListener = new AnanciUIActionListener();
     }
 
@@ -78,7 +78,7 @@ public final class AnanciUI extends JFrame
 
         /* Status Add Form */
         final StatusAddForm saf = new StatusAddForm();
-        saf.setActionListener(new StatusAddForm.SAFActionListener(dosnaObjects.getActor(), saf));
+        saf.setActionListener(new StatusAddForm.SAFActionListener(systemObjects.getActor(), saf));
         leftSection.add(saf, BorderLayout.NORTH);
 
         /**
@@ -110,7 +110,7 @@ public final class AnanciUI extends JFrame
                     @Override
                     public void run()
                     {
-                        ActivityStreamManager hsm = new ActivityStreamManager(dosnaObjects.getActor(), dosnaObjects.getDataManager());
+                        ActivityStreamManager hsm = new ActivityStreamManager(systemObjects.getActor(), systemObjects.getDataManager());
                         ActivityStream hs = hsm.createHomeStream();
                         homeStream.removeAll();
                         homeStream.add(hs, BorderLayout.CENTER);
@@ -151,7 +151,7 @@ public final class AnanciUI extends JFrame
         menuItem.setActionCommand(AnanciUIActionListener.AC_ADD_CONNECTION);
         menu.add(menuItem);
 
-        MessagesMenuItem mmi = new MessagesMenuItem(this.dosnaObjects);
+        MessagesMenuItem mmi = new MessagesMenuItem(this.systemObjects);
         menu.add(mmi.getMenuItem());
 
         /* Setting up the Help menu */
@@ -180,7 +180,7 @@ public final class AnanciUI extends JFrame
      */
     public void display()
     {
-        this.setTitle("Ananci - " + this.dosnaObjects.getActor().getName());
+        this.setTitle("Ananci - " + this.systemObjects.getActor().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
         this.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -221,23 +221,23 @@ public final class AnanciUI extends JFrame
             {
                 case AC_MANAGE_CONNECTIONS:
                     /* Load the Connections Manager UI */
-                    ConnectionsManagerUI cmui = new ConnectionsManagerUI(dosnaObjects.getActor(), dosnaObjects.getDataManager());
+                    ConnectionsManagerUI cmui = new ConnectionsManagerUI(systemObjects.getActor(), systemObjects.getDataManager());
                     cmui.create();
                     cmui.display();
                     break;
                 case AC_ADD_CONNECTION:
                     /* Load the Connections Add Form */
-                    ConnectionAddForm caf = new ConnectionAddForm(dosnaObjects.getActor(), dosnaObjects.getDataManager());
+                    ConnectionAddForm caf = new ConnectionAddForm(systemObjects);
                     caf.create();
                     caf.display();
                     break;
 
                 /* Help Menu cases */
                 case AC_HELP_PRINT_STORAGE:
-                    System.out.println(dosnaObjects.getDataManager().getKademliaNode().getDHT());
+                    System.out.println(systemObjects.getDataManager().getKademliaNode().getDHT());
                     break;
                 case AC_HELP_PRINT_ACTOR:
-                    System.out.println("\n" + AnanciUI.this.dosnaObjects.getActor() + "\n");
+                    System.out.println("\n" + AnanciUI.this.systemObjects.getActor() + "\n");
                     break;
                 case AC_HELP_PRINT_ROUTING_TABLE:
                     break;
@@ -257,7 +257,7 @@ public final class AnanciUI extends JFrame
             /* Save the state before closing */
             try
             {
-                AnanciUI.this.dosnaObjects.getDataManager().shutdown(true);
+                AnanciUI.this.systemObjects.getDataManager().shutdown(true);
             }
             catch (IOException ex)
             {

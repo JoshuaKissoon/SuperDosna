@@ -1,8 +1,10 @@
 package dosna.connections;
 
+import dosna.DosnaObjects;
 import dosna.dhtAbstraction.DataManager;
 import dosna.gui.ConnectionAddPanel;
 import dosna.messaging.MessageBox;
+import dosna.notification.DefaultNotification;
 import dosna.osn.actor.Actor;
 import dosna.osn.actor.Relationship;
 import java.io.IOException;
@@ -18,16 +20,16 @@ import java.util.logging.Logger;
 public class ConnectionsManager
 {
 
-    private final DataManager dataManager;
+    private final DosnaObjects dosnaObjects;
 
     /**
      * Construct a new ConnectionsManager
      *
-     * @param dataManager
+     * @param dosnaObjects
      */
-    public ConnectionsManager(final DataManager dataManager)
+    public ConnectionsManager(final DosnaObjects dosnaObjects)
     {
-        this.dataManager = dataManager;
+        this.dosnaObjects = dosnaObjects;
     }
 
     /**
@@ -48,7 +50,7 @@ public class ConnectionsManager
         try
         {
             /* Now let's update this actor object  on the DHT */
-            dataManager.putAndCache(actor);
+            this.dosnaObjects.getDataManager().putAndCache(actor);
         }
         catch (IOException ex)
         {
@@ -61,13 +63,17 @@ public class ConnectionsManager
 
         try
         {
-            this.dataManager.putAndCache(mb);
+            this.dosnaObjects.getDataManager().putAndCache(mb);
         }
         catch (IOException ex)
         {
             Logger.getLogger(ConnectionAddPanel.class.getName()).log(Level.SEVERE, "Unable to upload newly created message box.", ex);
             return false;
         }
+
+        /* Lets put a notification for the added actor */
+        DefaultNotification addedNotification = new DefaultNotification(connection.getKey(), "Actor " + actor.getId() + " has added you to his/her social circles. ");
+
 
         /* Everything's good if we got here! lets return true. */
         return true;

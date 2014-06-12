@@ -1,16 +1,13 @@
 package dosna.gui;
 
+import dosna.DosnaObjects;
 import dosna.connections.ConnectionsManager;
-import dosna.dhtAbstraction.DataManager;
 import dosna.osn.actor.Actor;
-import dosna.osn.actor.Relationship;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -40,8 +37,7 @@ public class ConnectionAddPanel extends JPanel
     private final static int FRAME_HEIGHT = 250;
 
     /* Main components */
-    private final Actor actor;
-    private final DataManager dataManager;
+    private final DosnaObjects systemObjects;
 
     /* Form components */
     private final JTextField searchBox;
@@ -50,17 +46,15 @@ public class ConnectionAddPanel extends JPanel
     /**
      * Setup the add connection panel
      *
-     * @param actor       Currently logged in Actor
-     * @param dataManager Used to put and get data
+     * @param systemObjects Used to put and get data
      */
-    public ConnectionAddPanel(final Actor actor, final DataManager dataManager)
+    public ConnectionAddPanel(final DosnaObjects systemObjects)
     {
         /* Setup the Panel */
         this.setLayout(new BorderLayout());
         this.setSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
-        this.actor = actor;
-        this.dataManager = dataManager;
+        this.systemObjects = systemObjects;
 
         Border b = new EmptyBorder(10, 10, 10, 10);
 
@@ -141,7 +135,7 @@ public class ConnectionAddPanel extends JPanel
                 JSocialKademliaStorageEntry val = null;
                 try
                 {
-                    val = ConnectionAddPanel.this.dataManager.get(gp);
+                    val = ConnectionAddPanel.this.systemObjects.getDataManager().get(gp);
                     u = (Actor) new Actor().fromSerializedForm(val.getContent());
                     ConnectionAddPanel.this.setResult(u);
                 }
@@ -173,7 +167,7 @@ public class ConnectionAddPanel extends JPanel
             final JButton btn = (JButton) evt.getSource();
             final Actor connection = (Actor) btn.getClientProperty("actor");
 
-            if (new ConnectionsManager(dataManager).addConnection(actor, connection))
+            if (new ConnectionsManager(systemObjects).addConnection(systemObjects.getActor(), connection))
             {
                 JOptionPane.showMessageDialog(null, "You have successfully added this connection!! Congrats!");
             }
