@@ -83,8 +83,6 @@ public class PeriodicNotificationsChecker extends Observable
                 if (notificationBox.hasNotifications())
                 {
                     /* Check if we have notifications and if we do, alert all of our observers */
-                    System.out.println("We have Notifications:: " + notificationBox.getNotifications().size());
-                    
                     PeriodicNotificationsChecker.this.setChanged();
                     PeriodicNotificationsChecker.this.notifyObservers();
                 }
