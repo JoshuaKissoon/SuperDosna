@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JFrame;
@@ -31,7 +33,7 @@ import javax.swing.JSplitPane;
  * @todo Handle Refreashing of home stream
  * @todo Make HomeStreamManager a producer to this class and do updates when it calls for an update
  */
-public final class AnanciUI extends JFrame
+public final class AnanciUI extends JFrame implements Observer
 {
 
     /* Properties */
@@ -58,6 +60,9 @@ public final class AnanciUI extends JFrame
     {
         this.systemObjects = dosnaObjects;
         this.actionListener = new AnanciUIActionListener();
+
+        /* Set this class to observe the notifications checker */
+        this.systemObjects.getNotificationsChecker().addObserver(this);
     }
 
     /**
@@ -198,6 +203,15 @@ public final class AnanciUI extends JFrame
         this.invalidate();
         this.validate();
         this.repaint();
+    }
+
+    /**
+     * Handle updates from observables
+     */
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        System.out.println("Notification Received in observable.update()");
     }
 
     /**
