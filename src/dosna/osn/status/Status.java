@@ -4,6 +4,8 @@ import dosna.content.DOSNAContent;
 import dosna.osn.actor.Actor;
 import dosna.util.HashCalculator;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import kademlia.node.KademliaId;
 
 /**
@@ -76,6 +78,20 @@ public class Status extends DOSNAContent
     public static Status createNew(final Actor actor, final String text)
     {
         return new Status(actor, text);
+    }
+
+    /**
+     * Create the DateTime value from the timestamp
+     *
+     * @return Formatted Date & Time for when this message was sent
+     */
+    public String getDateTime()
+    {
+        Date date = new Date(this.getCreatedTimestamp() * 1000L); // *1000 is to convert seconds to milliseconds
+        SimpleDateFormat sdf = new SimpleDateFormat("E dd MMMM, yyyy; HH:mm:ss"); // the format of your date
+        String formattedDate = sdf.format(date);
+
+        return formattedDate;
     }
 
     /**

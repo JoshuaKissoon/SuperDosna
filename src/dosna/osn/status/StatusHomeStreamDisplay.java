@@ -4,6 +4,7 @@ import dosna.osn.activitystream.ActivityStreamContent;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
 
 /**
  * Class that displays a status on the home stream
@@ -30,10 +31,22 @@ public class StatusHomeStreamDisplay extends JPanel implements ActivityStreamCon
         this.status = status;
 
         this.setLayout(new BorderLayout());
-        statusDisplayTA = new JTextArea(status.getStatusText());
+
+        StringBuilder statusText = new StringBuilder();
+
+        statusText.append(status.getOwnerId());
+        statusText.append(" on ");
+        statusText.append(status.getDateTime());
+        statusText.append(" \n\n");
+
+        statusText.append(status.getStatusText());
+
+        statusDisplayTA = new JTextArea(statusText.toString());
         statusDisplayTA.setEditable(false);
         statusDisplayTA.setWrapStyleWord(true);
         statusDisplayTA.setLineWrap(true);
+
+        statusDisplayTA.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         this.add(statusDisplayTA, BorderLayout.CENTER);
     }
