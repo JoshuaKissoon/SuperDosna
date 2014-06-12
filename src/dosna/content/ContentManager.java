@@ -33,9 +33,9 @@ public class ContentManager
      * Places a content object update on the DHT and handles all of the extra operations.
      *
      * When a content is to be updated:
- - The updated content is placed on the DHT.
- - A notification is added to the DefaultNotification box of all of it's associated actors
- -- All of these notification boxes are updated onto the DHT.
+     * - The updated content is placed on the DHT.
+     * - A notification is added to the DefaultNotification box of all of it's associated actors
+     * -- All of these notification boxes are updated onto the DHT.
      *
      * @param content The updated content to be placed.
      */

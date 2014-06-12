@@ -11,6 +11,8 @@ public class Message implements Comparable<Message>
 
     private final String text;
     private final long timestamp;
+
+    /* The ActorId of the sender and recipient */
     private final String senderId, recipientId;
 
     /**
