@@ -133,7 +133,8 @@ public final class MessageFrame extends JFrame implements Runnable
             int counter = 0;
             for (Message m : mb.getMessages())
             {
-                JLabel msgLbl = new JLabel(m.getText());
+                String mString = m.getSenderId() + "(" + m.getDateTime()+ ")" + ": " + m.getText();
+                JLabel msgLbl = new JLabel(mString);
                 messagesPanel.add(msgLbl, GBConstraints.getItemConstraints(0, counter++));
             }
 
@@ -148,7 +149,7 @@ public final class MessageFrame extends JFrame implements Runnable
         contactPanel.add(messagesPanel, BorderLayout.CENTER);
 
         /* Add the message add form */
-        MessageSendingForm msf = new MessageSendingForm(this.dosnaObjects, connectionAid);
+        MessageSendingForm msf = new MessageSendingForm(this.dosnaObjects, connectionAid, this);
         contactPanel.add(msf, BorderLayout.PAGE_END);
 
         return contactPanel;

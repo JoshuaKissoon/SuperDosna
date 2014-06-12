@@ -1,15 +1,19 @@
 package dosna.messaging.gui;
 
 import dosna.DosnaObjects;
+import dosna.messaging.Message;
+import dosna.messaging.MessageBox;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import kademlia.exceptions.ContentNotFoundException;
 
 /**
  * Manager for the message sending between actors
@@ -28,14 +32,26 @@ public final class MessageSendingForm extends JPanel
     /* Listeners */
     private ActionListener actionListener;
 
+    /* General objects */
+    private final DosnaObjects dosnaObjects;
+    private final String connectionAid;
+
+    private final MessageFrame msgFrame;
+
     /**
      * Setup a new object
      *
      * @param dosnaObjects  Objects that will be needed by the form's action event handlers
-     * @param connectionUid The ActorId of the connection that the logged in actor is sending the message to
+     * @param connectionAid The ActorId of the connection that the logged in actor is sending the message to
+     *
+     * @todo Remove sending the messageframe and use the Observer pattern
      */
-    public MessageSendingForm(final DosnaObjects dosnaObjects, final String connectionUid)
+    public MessageSendingForm(final DosnaObjects dosnaObjects, final String connectionAid, final MessageFrame msgFrame)
     {
+        this.dosnaObjects = dosnaObjects;
+        this.connectionAid = connectionAid;
+        this.msgFrame = msgFrame;
+
         this.setLayout(new BorderLayout());
         this.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -82,6 +98,21 @@ public final class MessageSendingForm extends JPanel
         this.messageTA.setText("");
     }
 
+    public final String getActorId()
+    {
+        return this.dosnaObjects.getActor().getId();
+    }
+
+    public final String getConnectionAid()
+    {
+        return this.connectionAid;
+    }
+
+    public final DosnaObjects getDosnaObjects()
+    {
+        return this.dosnaObjects;
+    }
+
     /**
      * An action listener class for the message sending form.
      * - This class is created to be stand alone so it can possibly be replaced later...
@@ -103,6 +134,19 @@ public final class MessageSendingForm extends JPanel
             if (text.trim().isEmpty())
             {
                 return;
+            }
+
+            /* We got here, means everything's all good */
+            Message m = new Message(text, form.getActorId(), form.getConnectionAid());
+
+            try
+            {
+                MessageBox box = this.form.getDosnaObjects().getMessagingManager().sendMessage(m, connectionAid);
+                msgFrame.updateContactPanel(connectionAid);
+            }
+            catch (IOException | ContentNotFoundException ex)
+            {
+                /* @todo Update user of failed message sending */
             }
         }
 

@@ -1,5 +1,9 @@
 package dosna.messaging;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * A message that can be sent between users
  *
@@ -48,6 +52,24 @@ public class Message implements Comparable<Message>
     public long getCreateTimestamp()
     {
         return this.timestamp;
+    }
+
+    /**
+     * Create the DateTime value from the timestamp
+     *
+     * @return Formatted Date & Time for when this message was sent
+     */
+    public String getDateTime()
+    {
+        Date date = new Date(this.getCreateTimestamp() * 1000L); // *1000 is to convert seconds to milliseconds
+        SimpleDateFormat sdf = new SimpleDateFormat("E dd MMMM, yyyy; HH:mm:ss"); // the format of your date
+        String formattedDate = sdf.format(date);
+
+//        Calendar date = Calendar.getInstance();
+//        date.setTimeInMillis(this.getCreateTimestamp() * 1000);
+        //return date.get(Calendar.DAY_OF_WEEK) + " " + date.get(Calendar.DATE) + " " + date.get(Calendar.MONTH) + ", " + date.get(Calendar.YEAR);
+        
+        return formattedDate;
     }
 
     /**
