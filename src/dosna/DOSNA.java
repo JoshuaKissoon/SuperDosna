@@ -91,7 +91,7 @@ public class DOSNA
                     {
                         /* Everything's great! Launch the app */
                         login.dispose();
-                        DOSNA.this.launchMainGUI(res.loggedInActor);
+                        DOSNA.this.launchDosna(res.loggedInActor);
                     }
                     else
                     {
@@ -219,7 +219,7 @@ public class DOSNA
                 {
                     signup.dispose();
                     JOptionPane.showMessageDialog(null, "You have successfully joined! welcome!");
-                    DOSNA.this.launchMainGUI(res.actor);
+                    DOSNA.this.launchDosna(res.actor);
                 }
                 else
                 {
@@ -330,7 +330,7 @@ public class DOSNA
      *
      * @param actor Which actor are we launching it for
      */
-    public void launchMainGUI(final Actor actor)
+    public void launchDosna(final Actor actor)
     {
         /* Lets set the data manager for this actor's content manager */
         actor.init(this.dataManager);

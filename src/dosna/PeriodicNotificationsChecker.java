@@ -28,7 +28,7 @@ public class PeriodicNotificationsChecker
 
     private final Timer timer;
     private final int period = 30 * 1000;   // in milliseconds
-    private final long intialDelay = 200 * 1000; // in milliseconds
+    private final long intialDelay = 60 * 1000; // in milliseconds
 
     private NotificationsTimerTask timerTask;
 
@@ -74,11 +74,11 @@ public class PeriodicNotificationsChecker
                 if (nBox.hasNotifications())
                 {
                     /* Check if we have notifications and if we do, alert all of our consumers */
-                    //System.out.println("We have Notifications:: " + nBox.getNotifications().size());
+                    System.out.println("We have Notifications:: " + nBox.getNotifications().size());
 
                     /* Now empty the notifications box and re-publish it on the network */
-                    nBox.emptyBox();
-                    dataManager.put(nBox);
+//                    nBox.emptyBox();
+//                    dataManager.put(nBox);
                 }
             }
             catch (ContentNotFoundException exe)
