@@ -3,6 +3,9 @@ package dosna.gui;
 import dosna.SystemObjectsManager;
 import dosna.osn.status.StatusAddForm;
 import dosna.messaging.gui.MessagesMenuItem;
+import dosna.notification.NotificationBox;
+import dosna.notification.NotificationsDisplay;
+import dosna.notification.PeriodicNotificationsChecker;
 import dosna.osn.activitystream.ActivityStream;
 import dosna.osn.activitystream.ActivityStreamManager;
 import java.awt.BorderLayout;
@@ -23,6 +26,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import kademlia.exceptions.ContentNotFoundException;
 
 /**
  * The Main User Interface class of DOSNA.
@@ -30,8 +34,7 @@ import javax.swing.JSplitPane;
  * @author Joshua Kissoon
  * @since 20140401
  *
- * @todo Handle Refreashing of home stream
- * @todo Make HomeStreamManager a producer to this class and do updates when it calls for an update
+ * @todo Make HomeStreamManager an observable to this class and do updates when it calls for an update
  */
 public final class AnanciUI extends JFrame implements Observer
 {
@@ -42,11 +45,18 @@ public final class AnanciUI extends JFrame implements Observer
 
     private final SystemObjectsManager systemObjects;
 
-    /* Components */
+    /* Specific Components */
     private JSplitPane splitPane;
     private JPanel leftSection, rightSection;
     private JScrollPane leftSectionSP, rightSectionSP;
     private JPanel homeStream;
+
+    /**
+     * General Components
+     */
+    private JScrollPane scrollPane;
+
+    private NotificationsDisplay notificationsDisplay;
 
     /* Listeners */
     private final ActionListener actionListener;
@@ -79,7 +89,6 @@ public final class AnanciUI extends JFrame implements Observer
         leftSection = new JPanel();
         leftSection.setLayout(new BorderLayout());
         leftSectionSP = new JScrollPane(leftSection);
-        //leftSectionSP.setMinimumSize(new Dimension(FRAME_WIDTH / 2, FRAME_HEIGHT / 2));
 
         /* Status Add Form */
         final StatusAddForm saf = new StatusAddForm();
@@ -92,11 +101,21 @@ public final class AnanciUI extends JFrame implements Observer
         rightSection = new JPanel();
         rightSectionSP = new JScrollPane(rightSection);
 
+        try
+        {
+            NotificationBox nBox = this.systemObjects.getNotificationsManager().getNotificationBox(this.systemObjects.getActor().getId());
+            this.displayNotifications(nBox);
+        }
+        catch (IOException | ContentNotFoundException ex)
+        {
+            System.err.println("Error whiles loading the notification box.");
+        }
+
         /**
          * @section Populating all content to the Main UI
          */
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.leftSectionSP, this.rightSectionSP);
-        splitPane.setDividerLocation(FRAME_WIDTH / 2);
+        splitPane.setDividerLocation((FRAME_WIDTH - (FRAME_WIDTH / 3)));
         this.getContentPane().add(splitPane, BorderLayout.CENTER);
 
         /**
@@ -127,6 +146,25 @@ public final class AnanciUI extends JFrame implements Observer
         );
     }
 
+    /**
+     * Display notifications for a given NotifictionBox
+     *
+     * @param nBox The NotificationBox
+     */
+    public void displayNotifications(final NotificationBox nBox)
+    {
+        notificationsDisplay = new NotificationsDisplay(nBox);
+        rightSection.add(notificationsDisplay.getNotificationsDisplay());
+    }
+
+    public void updateNotificationsDisplay(final NotificationBox nBox)
+    {
+        this.rightSection.remove(notificationsDisplay.getNotificationsDisplay());
+        this.displayNotifications(nBox);
+        
+        this.refresh();
+    }
+    
     /**
      * Create the main menu and add it to the JFrame
      */
@@ -211,7 +249,12 @@ public final class AnanciUI extends JFrame implements Observer
     @Override
     public void update(Observable o, Object arg)
     {
-        System.out.println("Notification Received in observable.update()");
+        if (o instanceof PeriodicNotificationsChecker)
+        {
+            /* We got notifications */
+            System.out.println("We have Notifications:: " + this.systemObjects.getNotificationsChecker().getNotificationBox().getNotifications().size());
+            this.updateNotificationsDisplay(this.systemObjects.getNotificationsChecker().getNotificationBox());
+        }
     }
 
     /**
