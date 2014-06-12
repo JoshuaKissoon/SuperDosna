@@ -1,5 +1,6 @@
 package dosna;
 
+import dosna.notification.PeriodicNotificationsChecker;
 import dosna.api.notification.NotificationsManager;
 import dosna.dhtAbstraction.DataManager;
 import dosna.messaging.MessagingManager;

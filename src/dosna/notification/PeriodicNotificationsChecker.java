@@ -1,4 +1,4 @@
-package dosna;
+package dosna.notification;
 
 import dosna.dhtAbstraction.DataManager;
 import dosna.notification.NotificationBox;
