@@ -26,7 +26,7 @@ public class DOSNA
 
     private DataManager dataManager = null;
     private PeriodicNotificationsChecker notificationsChecker;
-    private SystemObjects systemObjects;
+    private SystemObjectsManager systemObjects;
 
     public DOSNA()
     {
@@ -334,7 +334,7 @@ public class DOSNA
     {
         /* Lets set the data manager for this actor's content manager */
         actor.init(this.dataManager);
-        this.systemObjects = new SystemObjects(dataManager, actor);
+        this.systemObjects = new SystemObjectsManager(dataManager, actor);
         AnanciUI mainUi = new AnanciUI(this.systemObjects);
         mainUi.create();
         mainUi.display();
@@ -348,7 +348,7 @@ public class DOSNA
         return this.dataManager;
     }
     
-    public SystemObjects getSystemObjects()
+    public SystemObjectsManager getSystemObjects()
     {
         return this.systemObjects;
     }

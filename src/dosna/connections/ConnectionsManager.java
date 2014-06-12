@@ -1,6 +1,6 @@
 package dosna.connections;
 
-import dosna.SystemObjects;
+import dosna.SystemObjectsManager;
 import dosna.gui.ConnectionAddPanel;
 import dosna.messaging.MessageBox;
 import dosna.notification.DefaultNotification;
@@ -19,14 +19,14 @@ import java.util.logging.Logger;
 public class ConnectionsManager
 {
 
-    private final SystemObjects systemObjects;
+    private final SystemObjectsManager systemObjects;
 
     /**
      * Construct a new ConnectionsManager
      *
      * @param systemObjects
      */
-    public ConnectionsManager(final SystemObjects systemObjects)
+    public ConnectionsManager(final SystemObjectsManager systemObjects)
     {
         this.systemObjects = systemObjects;
     }

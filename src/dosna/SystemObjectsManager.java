@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author Joshua Kissoon
  * @since 20140611
  */
-public class SystemObjects
+public class SystemObjectsManager
 {
 
     private final DataManager dataManager;
@@ -33,7 +33,7 @@ public class SystemObjects
      * @param dataManager The DataManager used throughout the system
      * @param actor       The logged in actor
      */
-    public SystemObjects(final DataManager dataManager, final Actor actor)
+    public SystemObjectsManager(final DataManager dataManager, final Actor actor)
     {
         this.dataManager = dataManager;
         this.actor = actor;

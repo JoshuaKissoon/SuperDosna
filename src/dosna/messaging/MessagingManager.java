@@ -1,6 +1,6 @@
 package dosna.messaging;
 
-import dosna.SystemObjects;
+import dosna.SystemObjectsManager;
 import java.io.IOException;
 import kademlia.dht.GetParameter;
 import kademlia.exceptions.ContentNotFoundException;
@@ -14,14 +14,14 @@ import kademlia.exceptions.ContentNotFoundException;
 public class MessagingManager
 {
 
-    private final SystemObjects dosnaObjects;
+    private final SystemObjectsManager dosnaObjects;
 
     /**
      * Create a new Messaging Manager object
      *
      * @param dosnaObjects The objects are required to perform the various operations
      */
-    public MessagingManager(final SystemObjects dosnaObjects)
+    public MessagingManager(final SystemObjectsManager dosnaObjects)
     {
         this.dosnaObjects = dosnaObjects;
     }

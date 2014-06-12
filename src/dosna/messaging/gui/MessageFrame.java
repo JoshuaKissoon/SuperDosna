@@ -1,6 +1,6 @@
 package dosna.messaging.gui;
 
-import dosna.SystemObjects;
+import dosna.SystemObjectsManager;
 import dosna.gui.util.GBConstraints;
 import dosna.messaging.Message;
 import dosna.messaging.MessageBox;
@@ -38,14 +38,14 @@ public final class MessageFrame extends JFrame implements Runnable
     /* Panel to show the data for a single contact */
     private JPanel contactPanel;
 
-    private final SystemObjects dosnaObjects;
+    private final SystemObjectsManager dosnaObjects;
 
     /**
      * Setup a new messenger frame
      *
      * @param dosnaObjects The set of DOSNA objects
      */
-    public MessageFrame(final SystemObjects dosnaObjects)
+    public MessageFrame(final SystemObjectsManager dosnaObjects)
     {
         this.dosnaObjects = dosnaObjects;
     }

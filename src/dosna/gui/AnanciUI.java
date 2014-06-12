@@ -1,6 +1,6 @@
 package dosna.gui;
 
-import dosna.SystemObjects;
+import dosna.SystemObjectsManager;
 import dosna.osn.status.StatusAddForm;
 import dosna.messaging.gui.MessagesMenuItem;
 import dosna.osn.activitystream.ActivityStream;
@@ -38,7 +38,7 @@ public final class AnanciUI extends JFrame
     private final static int FRAME_WIDTH = 1200;
     private final static int FRAME_HEIGHT = 800;
 
-    private final SystemObjects systemObjects;
+    private final SystemObjectsManager systemObjects;
 
     /* Components */
     private JSplitPane splitPane;
@@ -54,7 +54,7 @@ public final class AnanciUI extends JFrame
      *
      * @param dosnaObjects The set of dosna objects
      */
-    public AnanciUI(final SystemObjects dosnaObjects)
+    public AnanciUI(final SystemObjectsManager dosnaObjects)
     {
         this.systemObjects = dosnaObjects;
         this.actionListener = new AnanciUIActionListener();
