@@ -1,7 +1,6 @@
 package dosna.connections;
 
 import dosna.DosnaObjects;
-import dosna.dhtAbstraction.DataManager;
 import dosna.gui.ConnectionAddPanel;
 import dosna.messaging.MessageBox;
 import dosna.notification.DefaultNotification;
@@ -20,16 +19,16 @@ import java.util.logging.Logger;
 public class ConnectionsManager
 {
 
-    private final DosnaObjects dosnaObjects;
+    private final DosnaObjects systemObjects;
 
     /**
      * Construct a new ConnectionsManager
      *
-     * @param dosnaObjects
+     * @param systemObjects
      */
-    public ConnectionsManager(final DosnaObjects dosnaObjects)
+    public ConnectionsManager(final DosnaObjects systemObjects)
     {
-        this.dosnaObjects = dosnaObjects;
+        this.systemObjects = systemObjects;
     }
 
     /**
@@ -50,7 +49,7 @@ public class ConnectionsManager
         try
         {
             /* Now let's update this actor object  on the DHT */
-            this.dosnaObjects.getDataManager().putAndCache(actor);
+            this.systemObjects.getDataManager().putAndCache(actor);
         }
         catch (IOException ex)
         {
@@ -63,7 +62,7 @@ public class ConnectionsManager
 
         try
         {
-            this.dosnaObjects.getDataManager().putAndCache(mb);
+            this.systemObjects.getDataManager().putAndCache(mb);
         }
         catch (IOException ex)
         {
@@ -73,7 +72,7 @@ public class ConnectionsManager
 
         /* Lets put a notification for the added actor */
         DefaultNotification addedNotification = new DefaultNotification(connection.getKey(), "Actor " + actor.getId() + " has added you to his/her social circles. ");
-
+        this.systemObjects.getNotificationsManager().sendNotification(connection.getId(), addedNotification);
 
         /* Everything's good if we got here! lets return true. */
         return true;
