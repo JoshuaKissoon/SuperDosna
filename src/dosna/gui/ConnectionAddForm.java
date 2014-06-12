@@ -1,6 +1,6 @@
 package dosna.gui;
 
-import dosna.DosnaObjects;
+import dosna.SystemObjects;
 import dosna.dhtAbstraction.DataManager;
 import dosna.osn.actor.Actor;
 import java.awt.Dimension;
@@ -19,14 +19,14 @@ public class ConnectionAddForm extends JFrame
     private final static int FRAME_WIDTH = 450;
     private final static int FRAME_HEIGHT = 250;
 
-    private final DosnaObjects systemObjects;
+    private final SystemObjects systemObjects;
 
     /**
      * Setup the add connection form
      *
      * @param systemObjects Used to put and get data
      */
-    public ConnectionAddForm(final DosnaObjects systemObjects)
+    public ConnectionAddForm(final SystemObjects systemObjects)
     {
         this.systemObjects = systemObjects;
     }

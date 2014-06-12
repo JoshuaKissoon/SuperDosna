@@ -1,6 +1,6 @@
 package dosna.messaging.gui;
 
-import dosna.DosnaObjects;
+import dosna.SystemObjects;
 import dosna.messaging.Message;
 import dosna.messaging.MessageBox;
 import java.awt.BorderLayout;
@@ -33,7 +33,7 @@ public final class MessageSendingForm extends JPanel
     private ActionListener actionListener;
 
     /* General objects */
-    private final DosnaObjects dosnaObjects;
+    private final SystemObjects dosnaObjects;
     private final String connectionAid;
 
     private final MessageFrame msgFrame;
@@ -46,7 +46,7 @@ public final class MessageSendingForm extends JPanel
      *
      * @todo Remove sending the messageframe and use the Observer pattern
      */
-    public MessageSendingForm(final DosnaObjects dosnaObjects, final String connectionAid, final MessageFrame msgFrame)
+    public MessageSendingForm(final SystemObjects dosnaObjects, final String connectionAid, final MessageFrame msgFrame)
     {
         this.dosnaObjects = dosnaObjects;
         this.connectionAid = connectionAid;
@@ -108,7 +108,7 @@ public final class MessageSendingForm extends JPanel
         return this.connectionAid;
     }
 
-    public final DosnaObjects getDosnaObjects()
+    public final SystemObjects getDosnaObjects()
     {
         return this.dosnaObjects;
     }

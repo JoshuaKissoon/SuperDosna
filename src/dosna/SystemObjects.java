@@ -12,7 +12,7 @@ import dosna.osn.actor.Actor;
  * @author Joshua Kissoon
  * @since 20140611
  */
-public class DosnaObjects
+public class SystemObjects
 {
 
     private final DataManager dataManager;
@@ -30,7 +30,7 @@ public class DosnaObjects
      * @param dataManager The DataManager used throughout the system
      * @param actor       The logged in actor
      */
-    public DosnaObjects(final DataManager dataManager, final Actor actor)
+    public SystemObjects(final DataManager dataManager, final Actor actor)
     {
         this.dataManager = dataManager;
         this.actor = actor;

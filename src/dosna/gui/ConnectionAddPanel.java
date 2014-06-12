@@ -1,6 +1,6 @@
 package dosna.gui;
 
-import dosna.DosnaObjects;
+import dosna.SystemObjects;
 import dosna.connections.ConnectionsManager;
 import dosna.osn.actor.Actor;
 import java.awt.BorderLayout;
@@ -37,7 +37,7 @@ public class ConnectionAddPanel extends JPanel
     private final static int FRAME_HEIGHT = 250;
 
     /* Main components */
-    private final DosnaObjects systemObjects;
+    private final SystemObjects systemObjects;
 
     /* Form components */
     private final JTextField searchBox;
@@ -48,7 +48,7 @@ public class ConnectionAddPanel extends JPanel
      *
      * @param systemObjects Used to put and get data
      */
-    public ConnectionAddPanel(final DosnaObjects systemObjects)
+    public ConnectionAddPanel(final SystemObjects systemObjects)
     {
         /* Setup the Panel */
         this.setLayout(new BorderLayout());

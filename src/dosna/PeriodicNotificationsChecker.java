@@ -4,6 +4,7 @@ import dosna.dhtAbstraction.DataManager;
 import dosna.notification.NotificationBox;
 import dosna.osn.actor.Actor;
 import java.io.IOException;
+import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 import socialkademlia.dht.JSocialKademliaStorageEntry;
@@ -20,7 +21,7 @@ import kademlia.exceptions.ContentNotFoundException;
  *
  * @todo Setup the producer-consumer pattern to allow for consumers to listen for notifications
  */
-public class PeriodicNotificationsChecker
+public class PeriodicNotificationsChecker extends Observable
 {
 
     private final DataManager dataManager;
@@ -31,6 +32,9 @@ public class PeriodicNotificationsChecker
     private final long intialDelay = 60 * 1000; // in milliseconds
 
     private NotificationsTimerTask timerTask;
+
+    /* We store a copy of the latest notification box */
+    private NotificationBox notificationBox;
 
     /**
      * Setup the class
@@ -57,6 +61,11 @@ public class PeriodicNotificationsChecker
 
     }
 
+    public NotificationBox getNotificationBox()
+    {
+        return this.notificationBox;
+    }
+
     private class NotificationsTimerTask extends TimerTask
     {
 
@@ -69,16 +78,15 @@ public class PeriodicNotificationsChecker
             {
                 /* Retrieve this users notification box from the network */
                 JSocialKademliaStorageEntry e = dataManager.get(temp.getKey(), temp.getType());
-                NotificationBox nBox = (NotificationBox) new NotificationBox().fromSerializedForm(e.getContent());
+                notificationBox = (NotificationBox) new NotificationBox().fromSerializedForm(e.getContent());
 
-                if (nBox.hasNotifications())
+                if (notificationBox.hasNotifications())
                 {
-                    /* Check if we have notifications and if we do, alert all of our consumers */
-                    System.out.println("We have Notifications:: " + nBox.getNotifications().size());
-
-                    /* Now empty the notifications box and re-publish it on the network */
-//                    nBox.emptyBox();
-//                    dataManager.put(nBox);
+                    /* Check if we have notifications and if we do, alert all of our observers */
+                    System.out.println("We have Notifications:: " + notificationBox.getNotifications().size());
+                    
+                    PeriodicNotificationsChecker.this.setChanged();
+                    PeriodicNotificationsChecker.this.notifyObservers();
                 }
             }
             catch (ContentNotFoundException exe)

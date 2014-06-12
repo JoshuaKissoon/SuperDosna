@@ -1,6 +1,6 @@
 package dosna.messaging.gui;
 
-import dosna.DosnaObjects;
+import dosna.SystemObjects;
 import dosna.api.gui.DosnaMenuItem;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,9 +19,9 @@ public class MessagesMenuItem implements DosnaMenuItem
     private final static String COMMAND = "mmiClicked";
 
     /* We store the dosna objects to pass to the messenger frame when it's launched */
-    private final DosnaObjects dosnaObjects;
+    private final SystemObjects dosnaObjects;
 
-    public MessagesMenuItem(final DosnaObjects dosnaObjects)
+    public MessagesMenuItem(final SystemObjects dosnaObjects)
     {
         this.dosnaObjects = dosnaObjects;
         menuItem = new JMenuItem("Messaging");
