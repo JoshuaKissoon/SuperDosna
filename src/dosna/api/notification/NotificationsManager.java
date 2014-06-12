@@ -31,6 +31,28 @@ public class NotificationsManager
     }
 
     /**
+     * Retrieve the notification box for a given actor
+     *
+     * @param actorId The actor whose notificaton box to retrieve
+     *
+     * @return The retrieved NotificationBox
+     *
+     * @throws java.io.IOException
+     * @throws kademlia.exceptions.ContentNotFoundException
+     */
+    public NotificationBox getNotificationBox(final String actorId) throws IOException, ContentNotFoundException
+    {
+        /* Lets construct a temporary DefaultNotification Box for this actor since the key will be generated */
+        NotificationBox temp = new NotificationBox(actorId);
+
+        /* Retrieve this users notification box from the network */
+        JSocialKademliaStorageEntry e = this.dataManager.get(temp.getKey(), temp.getType());
+        NotificationBox original = (NotificationBox) new NotificationBox().fromSerializedForm(e.getContent());
+
+        return original;
+    }
+
+    /**
      * Send a notification to a specific actor
      *
      * @param actorId      The actor to send the notification to
