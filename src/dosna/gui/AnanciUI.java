@@ -234,7 +234,7 @@ public final class AnanciUI extends JFrame
 
                 /* Help Menu cases */
                 case AC_HELP_PRINT_STORAGE:
-
+                    System.out.println(dosnaObjects.getDataManager().getKademliaNode().getDHT());
                     break;
                 case AC_HELP_PRINT_ACTOR:
                     System.out.println("\n" + AnanciUI.this.dosnaObjects.getActor() + "\n");

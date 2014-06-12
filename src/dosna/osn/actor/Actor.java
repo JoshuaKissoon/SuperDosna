@@ -265,8 +265,8 @@ public class Actor extends DOSNAContent
 
         sb.append("[username: ");
         sb.append(this.getOwnerId());
-
         sb.append("] ");
+        
         sb.append("[name: ");
         sb.append(this.fullName);
         sb.append("] ");
@@ -277,6 +277,10 @@ public class Actor extends DOSNAContent
 
         sb.append("[ConnectionsManager: ");
         sb.append(this.getConnectionManager());
+        sb.append("] ");
+        
+        sb.append("[updated: ");
+        sb.append(this.getLastUpdatedTimestamp());
         sb.append("] ");
 
         return sb.toString();
