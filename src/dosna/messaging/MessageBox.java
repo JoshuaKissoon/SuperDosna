@@ -40,11 +40,6 @@ public final class MessageBox extends DOSNAContent
 
         this.messages = new TreeSet<>();
 
-        /*@todo remove this since it's testing code */
-        this.addMessage(new Message("Some basic text", ownerId, contactId));
-        this.addMessage(new Message("Some basic text 2", ownerId, contactId));
-        this.addMessage(new Message("Some basic text 3", ownerId, contactId));
-
         this.generateKey();
     }
 
